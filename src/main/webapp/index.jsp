@@ -7,289 +7,246 @@
 <%@ include file="components/header.jsp" %>
 <%@ include file="components/navbar.jsp" %>
 
-<style>
-    /* Additional animations and enhancements */
-    .hero {
-        animation: fadeIn 1s ease-out;
-    }
-    
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: scale(0.98);
-        }
-        to {
-            opacity: 1;
-            transform: scale(1);
-        }
-    }
-    
-    .feature-card {
-        animation: slideUp 0.6s ease-out;
-        animation-fill-mode: both;
-    }
-    
-    @keyframes slideUp {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-    
-    .feature-card:nth-child(1) { animation-delay: 0.1s; }
-    .feature-card:nth-child(2) { animation-delay: 0.2s; }
-    .feature-card:nth-child(3) { animation-delay: 0.3s; }
-    .feature-card:nth-child(4) { animation-delay: 0.4s; }
-    
-    .movie-card {
-        animation: fadeInUp 0.6s ease-out;
-        animation-fill-mode: both;
-    }
-    
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-    
-    .movie-card:nth-child(1) { animation-delay: 0.1s; }
-    .movie-card:nth-child(2) { animation-delay: 0.15s; }
-    .movie-card:nth-child(3) { animation-delay: 0.2s; }
-    .movie-card:nth-child(4) { animation-delay: 0.25s; }
-    
-    /* Hero text animation */
-    .hero-content h1 {
-        animation: slideInLeft 0.8s ease-out;
-    }
-    
-    @keyframes slideInLeft {
-        from {
-            opacity: 0;
-            transform: translateX(-50px);
-        }
-        to {
-            opacity: 1;
-            transform: translateX(0);
-        }
-    }
-    
-    .hero-content p {
-        animation: slideInLeft 0.8s ease-out 0.2s both;
-    }
-    
-    .hero-buttons {
-        animation: slideInLeft 0.8s ease-out 0.4s both;
-    }
-    
-    .hero-image {
-        animation: slideInRight 0.8s ease-out;
-    }
-    
-    @keyframes slideInRight {
-        from {
-            opacity: 0;
-            transform: translateX(50px);
-        }
-        to {
-            opacity: 1;
-            transform: translateX(0);
-        }
-    }
-    
-    /* Section title animations */
-    .section-title {
-        position: relative;
-        display: inline-block;
-        width: auto;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    
-    .section-title::before {
-        content: '';
-        position: absolute;
-        top: 100%;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 0;
-        height: 4px;
-        background: #e94560;
-        transition: width 0.5s ease;
-    }
-    
-    .section-title:hover::before {
-        width: 100%;
-    }
-    
-    /* Floating animation for hero image */
-    .hero-image img {
-        animation: float 3s ease-in-out infinite;
-    }
-    
-    @keyframes float {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-15px); }
-    }
-    
-    /* Feature card enhancements */
-    .feature-card {
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .feature-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(233,69,96,0.1), transparent);
-        transition: left 0.5s ease;
-    }
-    
-    .feature-card:hover::before {
-        left: 100%;
-    }
-    
-    /* Movie card image zoom */
-    .movie-poster img {
-        transition: transform 0.5s ease;
-    }
-    
-    .movie-card:hover .movie-poster img {
-        transform: scale(1.08);
-    }
-    
-    /* Overlay gradient */
-    .movie-overlay {
-        background: linear-gradient(135deg, rgba(0,0,0,0.6), rgba(233,69,96,0.3));
-        transition: opacity 0.4s ease;
-    }
-    
-    /* Coming badge bounce */
-    .coming-badge {
-        animation: bounce 0.5s ease;
-    }
-    
-    @keyframes bounce {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-5px); }
-    }
-    
-    /* View all button animation */
-    .view-all {
-        animation: fadeIn 0.8s ease-out 0.6s both;
-    }
-    
-    /* Hover effects for section titles */
-    .now-showing .section-title,
-    .coming-soon .section-title,
-    .features .section-title {
-        transition: all 0.3s ease;
-    }
-    
-    /* Smooth scroll behavior */
-    html {
-        scroll-behavior: smooth;
-    }
-    
-    /* Responsive enhancements */
-    @media (max-width: 768px) {
-        .hero-content h1 {
-            font-size: 1.8rem;
-        }
-        
-        .feature-card {
-            padding: 20px;
-        }
-        
-        .movies-grid {
-            gap: 15px;
-        }
-    }
-    
-    /* Loading shimmer for images */
-    .movie-poster img {
-        background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-        background-size: 200% 100%;
-        animation: shimmer 1.5s infinite;
-    }
-    
-    @keyframes shimmer {
-        0% { background-position: -200% 0; }
-        100% { background-position: 200% 0; }
-    }
-    
-    .movie-poster img.loaded {
-        animation: none;
-        background: none;
-    }
-</style>
 
 <!-- ===== HERO SECTION ===== -->
-<section class="hero">
-    <div class="hero-content">
-        <h1>Book Your Movie Tickets <span>Online</span></h1>
-        <p>✨ Experience the magic of cinema with CineBook — browse the latest movies, choose your seats, and book tickets instantly, anytime, anywhere.</p>
-        <div class="hero-buttons">
-            <a href="${pageContext.request.contextPath}/customer/movies" class="btn btn-primary">
-                🎬 Browse Movies
-            </a>
-            <c:if test="${empty sessionScope.loggedInCustomer}">
-                <a href="${pageContext.request.contextPath}/customer/register" class="btn btn-secondary">
-                    🚀 Get Started
-                </a>
-            </c:if>
+<section class="hero-slider">
+
+    <div class="slider-track" id="sliderTrack">
+
+        <!-- ===== SLIDE 1: Welcome Slide ===== -->
+        <div class="slide slide-welcome">
+            <div class="slide-bg-overlay"></div>
+            <div class="slide-content">
+                <div class="slide-left">
+                    <div class="hero-tag">
+                        <span>🎬</span>
+                        <span>NEPAL'S #1 MOVIE BOOKING</span>
+                    </div>
+                    <h1 class="hero-title">
+                        Book Your Movie<br>
+                        Tickets <span class="gradient-text">Online</span>
+                    </h1>
+                    <p class="hero-description">
+                        Experience the magic of cinema with CineBook.
+                        Browse latest movies, choose your seats, and
+                        book tickets instantly — anytime, anywhere.
+                    </p>
+                    <div class="hero-features">
+                        <div class="feature-pill">🎟️ Instant Booking</div>
+                        <div class="feature-pill">💺 Live Seat Selection</div>
+                        <div class="feature-pill">💳 eSewa Payment</div>
+                    </div>
+                    <div class="hero-buttons">
+                        <a href="${pageContext.request.contextPath}/customer/movies"
+                           class="btn-hero-primary">🎬 Browse Movies</a>
+                        <c:if test="${empty sessionScope.loggedInCustomer}">
+                            <a href="${pageContext.request.contextPath}/customer/register"
+                               class="btn-hero-outline">✨ Get Started</a>
+                        </c:if>
+                    </div>
+                </div>
+                <div class="slide-right">
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <span class="stat-number">100+</span>
+                            <span class="stat-label">Movies</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-number">50K+</span>
+                            <span class="stat-label">Happy Users</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-number">3</span>
+                            <span class="stat-label">Halls</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-number">24/7</span>
+                            <span class="stat-label">Support</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="hero-image">
-        <img src="${pageContext.request.contextPath}/Public/images/hero-movie.png" alt="Movies" onerror="this.style.display='none'">
-    </div>
-</section>
 
-<!-- ===== FEATURES SECTION ===== -->
-<section class="features">
-    <div class="container">
-        <h2 class="section-title">Why Choose CineBook? 🎯</h2>
-        <div class="features-grid">
-
-            <div class="feature-card">
-                <div class="feature-icon">🎬</div>
-                <h3>Latest Movies</h3>
-                <p>Stay updated with now showing and upcoming movies all in one place.</p>
+        <!-- ===== MOVIE SLIDES ===== -->
+        <c:forEach var="movie" items="${nowShowingMovies}">
+            <div class="slide slide-movie">
+                <div class="slide-movie-bg">
+                    <c:if test="${not empty movie.posterUrl}">
+                        <img src="${pageContext.request.contextPath}/uploads/${movie.posterUrl}"
+                             alt="${movie.title}" class="slide-bg-img"/>
+                    </c:if>
+                    <div class="slide-movie-overlay"></div>
+                </div>
+                <div class="slide-content">
+                    <div class="slide-left">
+                        <div class="hero-tag">
+                            <span>🔥</span>
+                            <span>NOW SHOWING</span>
+                        </div>
+                        <h1 class="hero-title movie-slide-title">
+                            ${movie.title}
+                        </h1>
+                        <div class="movie-slide-meta">
+                            <span class="meta-pill">🎭 ${movie.genre}</span>
+                            <span class="meta-pill">🌐 ${movie.language}</span>
+                            <span class="meta-pill">⏱️ ${movie.duration} mins</span>
+                            <c:if test="${not empty movie.rating && movie.rating > 0}">
+                                <span class="meta-pill">⭐ ${movie.rating}/10</span>
+                            </c:if>
+                        </div>
+                        <p class="hero-description movie-slide-desc">
+                            ${movie.description}
+                        </p>
+                        <div class="hero-buttons">
+                            <a href="${pageContext.request.contextPath}/customer/showtimes?movieId=${movie.movieId}"
+                               class="btn-hero-primary">🎟️ Book Now</a>
+                            <a href="${pageContext.request.contextPath}/customer/movies"
+                               class="btn-hero-outline">View All Movies</a>
+                        </div>
+                    </div>
+                    <div class="slide-right">
+                        <c:if test="${not empty movie.posterUrl}">
+                            <div class="movie-poster-float">
+                                <img src="${pageContext.request.contextPath}/uploads/${movie.posterUrl}"
+                                     alt="${movie.title}"/>
+                            </div>
+                        </c:if>
+                    </div>
+                </div>
             </div>
+        </c:forEach>
 
-            <div class="feature-card">
-                <div class="feature-icon">💺</div>
-                <h3>Seat Selection</h3>
-                <p>Pick your favorite seat with our easy interactive seat map.</p>
+        <!-- ===== COMING SOON SLIDES ===== -->
+        <c:forEach var="movie" items="${comingSoonMovies}">
+            <div class="slide slide-coming">
+                <div class="slide-movie-bg">
+                    <c:if test="${not empty movie.posterUrl}">
+                        <img src="${pageContext.request.contextPath}/uploads/${movie.posterUrl}"
+                             alt="${movie.title}" class="slide-bg-img"/>
+                    </c:if>
+                    <div class="slide-coming-overlay"></div>
+                </div>
+                <div class="slide-content">
+                    <div class="slide-left">
+                        <div class="hero-tag coming-tag">
+                            <span>⏰</span>
+                            <span>COMING SOON</span>
+                        </div>
+                        <h1 class="hero-title movie-slide-title">
+                            ${movie.title}
+                        </h1>
+                        <div class="movie-slide-meta">
+                            <span class="meta-pill">🎭 ${movie.genre}</span>
+                            <span class="meta-pill">🌐 ${movie.language}</span>
+                            <span class="meta-pill">⏱️ ${movie.duration} mins</span>
+                        </div>
+                        <p class="hero-description movie-slide-desc">
+                            ${movie.description}
+                        </p>
+                        <div class="hero-buttons">
+                            <span class="btn-hero-coming">🔜 Coming Soon</span>
+                            <a href="${pageContext.request.contextPath}/customer/movies"
+                               class="btn-hero-outline">View All Movies</a>
+                        </div>
+                    </div>
+                    <div class="slide-right">
+                        <c:if test="${not empty movie.posterUrl}">
+                            <div class="movie-poster-float coming-poster">
+                                <img src="${pageContext.request.contextPath}/uploads/${movie.posterUrl}"
+                                     alt="${movie.title}"/>
+                                <div class="coming-soon-badge">Coming Soon</div>
+                            </div>
+                        </c:if>
+                    </div>
+                </div>
             </div>
+        </c:forEach>
 
-            <div class="feature-card">
-                <div class="feature-icon">⚡</div>
-                <h3>Instant Booking</h3>
-                <p>Book your tickets in seconds and get instant confirmation.</p>
+        <!-- ===== INFO SLIDE: How It Works ===== -->
+        <div class="slide slide-info">
+            <div class="slide-bg-overlay info-overlay"></div>
+            <div class="slide-content">
+                <div class="slide-left">
+                    <div class="hero-tag">
+                        <span>💡</span>
+                        <span>HOW IT WORKS</span>
+                    </div>
+                    <h1 class="hero-title">
+                        Book in <span class="gradient-text">3 Easy Steps</span>
+                    </h1>
+                    <div class="steps-list">
+                        <div class="step-item">
+                            <div class="step-num">1</div>
+                            <div class="step-info">
+                                <h4>Browse Movies</h4>
+                                <p>Find now showing or coming soon movies</p>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-num">2</div>
+                            <div class="step-info">
+                                <h4>Select Seats</h4>
+                                <p>Pick your favorite seats from live seat map</p>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-num">3</div>
+                            <div class="step-info">
+                                <h4>Pay via eSewa</h4>
+                                <p>Secure payment and instant confirmation</p>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="${pageContext.request.contextPath}/customer/movies"
+                       class="btn-hero-primary">🎬 Start Booking</a>
+                </div>
+                <div class="slide-right">
+                    <div class="info-features">
+                        <div class="info-feature-card">
+                            <span class="info-icon">🎟️</span>
+                            <h4>Instant Booking</h4>
+                            <p>Get confirmed in seconds</p>
+                        </div>
+                        <div class="info-feature-card">
+                            <span class="info-icon">💺</span>
+                            <h4>60 Seats Per Hall</h4>
+                            <p>3 halls available daily</p>
+                        </div>
+                        <div class="info-feature-card">
+                            <span class="info-icon">🔒</span>
+                            <h4>Secure Payment</h4>
+                            <p>Powered by eSewa gateway</p>
+                        </div>
+                        <div class="info-feature-card">
+                            <span class="info-icon">🖨️</span>
+                            <h4>PDF Tickets</h4>
+                            <p>Download and print anytime</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <div class="feature-card">
-                <div class="feature-icon">📋</div>
-                <h3>Booking History</h3>
-                <p>View and manage all your past and upcoming bookings easily.</p>
-            </div>
-
         </div>
+
     </div>
+
+    <!-- ===== SLIDER CONTROLS ===== -->
+    <button class="slider-btn slider-prev" id="sliderPrev">
+        <svg width="24" height="24" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+    </button>
+    <button class="slider-btn slider-next" id="sliderNext">
+        <svg width="24" height="24" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+    </button>
+
+    <!-- ===== SLIDER DOTS ===== -->
+    <div class="slider-dots" id="sliderDots"></div>
+
 </section>
 
 <!-- ===== NOW SHOWING SECTION ===== -->
@@ -412,24 +369,91 @@
         </div>
     </div>
 </section>
-
 <script>
-    // Image loading animation
-    document.querySelectorAll('.movie-poster img').forEach(img => {
-        if (img.complete) {
-            img.classList.add('loaded');
-        }
-    });
-    
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            document.querySelector(this.getAttribute('href')).scrollIntoView({
-                behavior: 'smooth'
-            });
-        });
-    });
-</script>
+// ===== HERO SLIDER =====
+const sliderTrack  = document.getElementById('sliderTrack');
+const prevBtn      = document.getElementById('sliderPrev');
+const nextBtn      = document.getElementById('sliderNext');
+const dotsContainer = document.getElementById('sliderDots');
 
+const slides     = document.querySelectorAll('.slide');
+const totalSlides = slides.length;
+let currentSlide  = 0;
+let autoInterval;
+
+// Create dots
+function createDots() {
+    dotsContainer.innerHTML = '';
+    slides.forEach((_, i) => {
+        const dot = document.createElement('button');
+        dot.classList.add('slider-dot');
+        if (i === currentSlide) dot.classList.add('active');
+        dot.addEventListener('click', () => goToSlide(i));
+        dotsContainer.appendChild(dot);
+    });
+}
+
+// Update dots
+function updateDots() {
+    document.querySelectorAll('.slider-dot').forEach((dot, i) => {
+        dot.classList.toggle('active', i === currentSlide);
+    });
+}
+
+// Go to specific slide
+function goToSlide(index) {
+    currentSlide = index;
+    // Use string concatenation instead of backticks/template literals
+    sliderTrack.style.transform = 'translateX(-' + (currentSlide * 100) + '%)';
+    updateDots();
+}
+
+// Next slide
+function nextSlide() {
+    currentSlide = (currentSlide + 1) % totalSlides;
+    goToSlide(currentSlide);
+}
+
+// Prev slide
+function prevSlide() {
+    currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+    goToSlide(currentSlide);
+}
+
+// Auto slide
+function startAuto() {
+    autoInterval = setInterval(nextSlide, 3000);
+}
+
+function stopAuto() {
+    clearInterval(autoInterval);
+}
+
+// Event listeners
+prevBtn.addEventListener('click', () => { stopAuto(); prevSlide(); startAuto(); });
+nextBtn.addEventListener('click', () => { stopAuto(); nextSlide(); startAuto(); });
+
+// Pause on hover
+const heroSlider = document.querySelector('.hero-slider');
+heroSlider.addEventListener('mouseenter', stopAuto);
+heroSlider.addEventListener('mouseleave', startAuto);
+
+// Touch/swipe support
+let touchStartX = 0;
+heroSlider.addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].clientX;
+});
+heroSlider.addEventListener('touchend', e => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) {
+        stopAuto();
+        diff > 0 ? nextSlide() : prevSlide();
+        startAuto();
+    }
+});
+
+// Initialize
+createDots();
+startAuto();
+</script>
 <%@ include file="components/footer.jsp" %>
