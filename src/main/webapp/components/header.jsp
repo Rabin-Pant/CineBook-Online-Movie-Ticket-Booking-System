@@ -28,42 +28,6 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/${extraCSS}">
     </c:if>
     
-    <style>
-        /* Loading animation */
-        .page-loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #1a1a2e;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 0.5s ease;
-        }
-        
-        .page-loader.hide {
-            opacity: 0;
-            pointer-events: none;
-        }
-        
-        .loader-spinner {
-            width: 50px;
-            height: 50px;
-            border: 3px solid rgba(233,69,96,0.3);
-            border-top: 3px solid #e94560;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    </style>
-    
     <script>
         // Hide loader when page loads
         window.addEventListener('load', function() {
