@@ -422,7 +422,7 @@ function prevSlide() {
 
 // Auto slide
 function startAuto() {
-    autoInterval = setInterval(nextSlide, 3000);
+    autoInterval = setInterval(nextSlide, 10000);
 }
 
 function stopAuto() {
