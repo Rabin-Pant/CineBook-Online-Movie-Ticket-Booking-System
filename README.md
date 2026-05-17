@@ -289,11 +289,21 @@ JSP View (Response)
 
 ## 📦 Dependencies
 
+### Runtime JARs (in WEB-INF/lib)
+```
+itextpdf-5.5.13.3.jar
+mysql-connector-j-8.3.0.jar
+jakarta.servlet.jsp.jstl-3.0.1.jar
+jakarta.servlet.jsp.jstl-api-3.0.0.jar
+jbcrypt-0.4.jar
+```
+
+### Maven Dependencies (pom.xml)
 ```xml
-<!-- Jakarta Servlet API -->
+<!-- Servlet API — provided by Tomcat -->
 jakarta.servlet:jakarta.servlet-api:6.0.0
 
-<!-- Jakarta JSP API -->
+<!-- JSP API — provided by Tomcat -->
 jakarta.servlet.jsp:jakarta.servlet.jsp-api:3.1.0
 
 <!-- JSTL -->
