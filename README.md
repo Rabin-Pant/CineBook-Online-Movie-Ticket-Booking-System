@@ -182,6 +182,7 @@ private static final String PASSWORD = ""; // your MySQL password
 
 ### Step 6 — Access Application
 Customer:  http://localhost:8080/CineBook/
+
 Admin:     http://localhost:8080/CineBook/admin/login
 
 ---
@@ -339,15 +340,15 @@ com.itextpdf:itextpdf:5.5.13.3
 
 ## 👨‍💻 Developer
 
-**Rabin Panta**
-- 📧 rabinpant1@gmail.com
-- 🌐 GitHub: [@yourusername](https://github.com/yourusername)
+**Rabin Pant**
+- 📧 rabinpant194@hmail.com
+- 🌐 GitHub: [@yourusername](https://github.com/Rabin-Pant)
 
 ---
 
 ## 📄 License
 
-This project is developed for educational purposes as a college project.
+This project is developed for educational purposes.
 
 ---
 
