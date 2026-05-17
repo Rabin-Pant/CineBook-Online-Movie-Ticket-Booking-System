@@ -99,6 +99,8 @@ CineBook is a full-stack online movie ticket booking system developed as a colle
 ---
 
 ## 📁 Project Structure
+
+```
 CineBook/
 ├── src/
 │   └── main/
@@ -126,7 +128,6 @@ CineBook/
 ├── schema.sql                        ← Database schema
 ├── pom.xml                           ← Maven dependencies
 └── README.md
-
 ---
 
 ## ⚙️ Setup Instructions
