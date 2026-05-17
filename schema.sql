@@ -28,13 +28,14 @@ CREATE TABLE IF NOT EXISTS admins (
 -- TABLE: customers
 -- ================================================
 CREATE TABLE IF NOT EXISTS customers (
-    customer_id  INT AUTO_INCREMENT PRIMARY KEY,
-    full_name    VARCHAR(100) NOT NULL,
-    email        VARCHAR(100) NOT NULL UNIQUE,
-    password     VARCHAR(255) NOT NULL,
-    phone        VARCHAR(15),
-    is_active    BOOLEAN DEFAULT TRUE,        -- for block/unblock feature
-    created_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    customer_id      INT AUTO_INCREMENT PRIMARY KEY,
+    full_name        VARCHAR(100) NOT NULL,
+    email            VARCHAR(100) NOT NULL UNIQUE,
+    password         VARCHAR(255) NOT NULL,
+    phone            VARCHAR(15) DEFAULT NULL,
+    is_active        TINYINT(1) DEFAULT 1,
+    profile_picture  VARCHAR(255) DEFAULT NULL,
+    created_at       TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 -- ================================================
