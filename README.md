@@ -342,7 +342,7 @@ com.itextpdf:itextpdf:5.5.13.3
 
 **Rabin Pant**
 - 📧 rabinpant194@hmail.com
-- 🌐 GitHub: [@yourusername](https://github.com/Rabin-Pant)
+- 🌐 GitHub: [Rabin Pant](https://github.com/Rabin-Pant)
 
 ---
 
