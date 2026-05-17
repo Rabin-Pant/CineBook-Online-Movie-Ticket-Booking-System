@@ -141,12 +141,12 @@ CineBook/
 
 ### Step 1 — Clone Repository
 ```bash
-git clone https://github.com/yourusername/CineBook.git
+git clone https://github.com/Rabin-Pant/CineBook-Online-Movie-Ticket-Booking-System
 cd CineBook
 ```
 
 ### Step 2 — Database Setup
-1. Start MySQL via XAMPP or MySQL Server
+1. Start MySQL and Apache via XAMPP or MySQL Server
 2. Open **phpMyAdmin** or **MySQL Workbench**
 3. Create database:
 
@@ -182,7 +182,6 @@ private static final String PASSWORD = ""; // your MySQL password
 
 ### Step 6 — Access Application
 Customer:  http://localhost:8080/CineBook/
-
 Admin:     http://localhost:8080/CineBook/admin/login
 
 ---
