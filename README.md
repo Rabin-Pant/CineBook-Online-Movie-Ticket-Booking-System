@@ -128,7 +128,7 @@ CineBook/
 ├── schema.sql                        ← Database schema
 ├── pom.xml                           ← Maven dependencies
 └── README.md
-'''
+```
 
 ## ⚙️ Setup Instructions
 
