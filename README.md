@@ -141,7 +141,7 @@ CineBook/
 
 ### Step 1 — Clone Repository
 ```bash
-git clone https://github.com/yourusername/CineBook.git
+git clone https://github.com/Rabin-Pant/CineBook-Online-Movie-Ticket-Booking-System
 cd CineBook
 ```
 
