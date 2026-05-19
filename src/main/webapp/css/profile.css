@@ -1,0 +1,366 @@
+/* Modern Grid Wrapper & Entrance Animations */
+.profile-wrapper {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 40px;
+    align-items: start;
+    animation: premiumFadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes premiumFadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Sidebar Profile Card - Derived directly from index.css background gradients */
+.profile-card {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    color: #ffffff;
+    border-radius: 24px;
+    padding: 45px 30px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.profile-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(15, 52, 96, 0.3) 0%, transparent 70%);
+    animation: slowAmbientRotation 20s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes slowAmbientRotation {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.profile-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 15px 40px rgba(15, 52, 96, 0.3);
+}
+
+/* Master Profile Picture Mask */
+.profile-pic-wrapper {
+    position: relative;
+    width: 130px;
+    height: 130px;
+    margin: 0 auto 25px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+    border: 3px solid #0f3460;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.profile-pic-wrapper:hover {
+    transform: scale(1.03);
+    border-color: #1a1a2e;
+}
+
+.profile-pic-wrapper .profile-pic-img,
+.profile-pic-wrapper .profile-avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    border-radius: 50%;
+}
+
+.profile-pic-wrapper .profile-avatar {
+    background: linear-gradient(135deg, #0f3460 0%, #1a1a2e 100%);
+    color: #ffffff;
+    font-size: 2.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
+}
+
+/* Smooth Circular Mask Upload Hover Overlay */
+.profile-pic-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(10, 10, 20, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    opacity: 0;
+    transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 50%;
+}
+
+.profile-pic-wrapper:hover .profile-pic-overlay {
+    opacity: 1;
+}
+
+/* Typography Inside Left Sidebar */
+.profile-card h3 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: 0.3px;
+    color: #ffffff;
+}
+
+.profile-card p {
+    color: #cccccc;
+    font-size: 0.92rem;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.member-since {
+    font-size: 0.8rem !important;
+    color: #888888 !important;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Glassmorphic Form Card matching index.css dark canvas look */
+.profile-form.card {
+    background: rgba(10, 10, 20, 0.95);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: box-shadow 0.3s ease;
+}
+
+.profile-form.card:hover {
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+}
+
+.profile-form h3 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 30px;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Input Fields & Groups styling */
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: #cccccc;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 14px 18px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    font-size: 15px;
+    color: #ffffff;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: #0f0f1a;
+}
+
+.form-group input:focus {
+    border-color: #0f3460;
+    box-shadow: 0 0 20px rgba(15, 52, 96, 0.4);
+    outline: none;
+    background: rgba(26, 26, 46, 0.9);
+}
+
+.form-group input:disabled {
+    background: rgba(255, 255, 255, 0.03);
+    color: #666666;
+    border-color: rgba(255, 255, 255, 0.05);
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
+/* Custom Profile Photo Upload Zone inside Form */
+.pic-upload-area {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 18px;
+    border-radius: 14px;
+    border: 1px dashed rgba(255, 255, 255, 0.15);
+    margin-top: 6px;
+}
+
+.pic-preview-img {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #0f3460;
+    box-shadow: 0 4px 15px rgba(15, 52, 96, 0.3);
+}
+
+.pic-preview-placeholder {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.04);
+    color: #888888;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    text-align: center;
+    border: 2px dashed rgba(255, 255, 255, 0.08);
+    line-height: 1.3;
+    padding: 6px;
+}
+
+.pic-upload-btn {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    color: #ffffff;
+    padding: 12px 22px;
+    border-radius: 12px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.3s ease;
+}
+
+.pic-upload-btn:hover {
+    background: linear-gradient(135deg, #0f3460 0%, #1a1a2e 100%);
+    box-shadow: 0 6px 20px rgba(15, 52, 96, 0.4);
+    border-color: transparent;
+    transform: translateY(-1px);
+}
+
+.pic-upload-area input[type="file"] {
+    display: none !important;
+}
+
+/* Consistent Buttons using theme color ranges */
+.btn {
+    width: 100%;
+    padding: 14px 24px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: none;
+    letter-spacing: 0.3px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);
+    color: #ffffff;
+    box-shadow: 0 4px 15px rgba(15, 52, 96, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #16213e 0%, #1a1a2e 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(15, 52, 96, 0.4);
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1a 100%);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.btn-secondary:hover {
+    background: linear-gradient(135deg, #16213e 0%, #1a1a2e 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+/* Ambient Fading Separator */
+hr {
+    margin: 45px 0;
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+}
+
+/* Alert Notification Framework */
+.alert {
+    animation: luxurySlideDown 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 12px !important;
+    font-weight: 500;
+    border: none !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes luxurySlideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Adaptive Layouts */
+@media (max-width: 992px) {
+    .profile-wrapper {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .profile-card {
+        max-width: 100%;
+        padding: 35px 24px;
+    }
+}
+
+@media (max-width: 576px) {
+    .profile-form.card {
+        padding: 24px;
+    }
+    
+    .pic-upload-area {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 15px;
+    }
+}
+
+/* Icon layout adjustments */
+.email-icon, .phone-icon, .calendar-icon {
+    display: inline-block;
+    margin-right: 6px;
+}
