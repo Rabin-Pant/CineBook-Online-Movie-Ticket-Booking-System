@@ -1,0 +1,121 @@
+.back-link {
+    display: inline-block;
+    color: #e94560;
+    text-decoration: none;
+    margin-bottom: 20px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.back-link:hover { text-decoration: underline; }
+
+/* Movie Banner */
+.movie-banner {
+    display: flex;
+    gap: 30px;
+    background: linear-gradient(135deg, #1a1a2e, #0f3460);
+    border-radius: 16px;
+    padding: 30px;
+    color: #fff;
+    margin-bottom: 40px;
+}
+
+.movie-banner-poster {
+    width: 180px;
+    height: 250px;
+    border-radius: 10px;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: #0d0d0d;
+}
+
+.movie-banner-poster img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.no-poster-lg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-size: 4rem;
+}
+
+.movie-banner-info h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 12px;
+}
+
+.movie-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.tag {
+    background: rgba(255,255,255,0.15);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.82rem;
+}
+
+.movie-desc-full {
+    color: #bbb;
+    line-height: 1.7;
+    font-size: 0.95rem;
+}
+
+/* Showtimes Grid */
+.section-heading {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 20px;
+    border-bottom: 3px solid #e94560;
+    display: inline-block;
+    padding-bottom: 8px;
+}
+
+.showtimes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.showtime-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    transition: transform 0.3s;
+}
+
+.showtime-card:hover { transform: translateY(-4px); }
+
+.showtime-date {
+    font-weight: 700;
+    color: #1a1a2e;
+    font-size: 1rem;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.showtime-details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+@media (max-width: 768px) {
+    .movie-banner { flex-direction: column; }
+    .movie-banner-poster { width: 100%; height: 200px; }
+}
