@@ -27,6 +27,7 @@
 
         <form action="${pageContext.request.contextPath}/customer/register" method="post">
 
+            <%-- ROW 1: Side-by-Side Grid (Full Name & Phone Number) --%>
             <div class="form-row">
                 <div class="form-group">
                     <label for="fullName">
@@ -45,6 +46,7 @@
                     <input type="text" id="phone" name="phone"
                            placeholder="98XXXXXXXX"
                            value="${not empty param.phone ? param.phone : ''}"
+                           maxlength="10"
                            required />
                 </div>
             </div>
@@ -54,12 +56,15 @@
                     <i class="fas fa-envelope"></i> Email Address
                 </label>
                 <input type="email" id="email" name="email"
-                       placeholder="Enter your email address"
+                       placeholder="yourname@gmail.com"
                        value="${not empty param.email ? param.email : ''}"
                        required />
-                <small style="color: #888; font-size: 0.75rem;">We'll never share your email</small>
+                       <small style="color:#888;">
+        Accepted: Gmail, Yahoo, Hotmail, Outlook
+    </small>
             </div>
 
+            <%-- ROW 3: Side-by-Side Grid (Password fields) --%>
             <div class="form-row">
                 <div class="form-group">
                     <label for="password">
