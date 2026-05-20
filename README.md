@@ -48,7 +48,7 @@ CineBook is a full-stack online movie ticket booking system developed as a colle
 | 🔍 Movie Search | Search by title, genre, language |
 | 🕐 View Showtimes | Only future showtimes shown |
 | 💺 Seat Selection | Interactive live seat map |
-| 💳 eSewa Payment | Secure sandbox payment gateway |
+| 💳 Payment eSewa/Khalti | Secure sandbox payment gateway |
 | 🎟️ Booking History | View all past and current bookings |
 | ❌ Cancel Booking | 8% cancellation fee, refund within 24hrs |
 | 🖨️ Print Ticket | Download booking as PDF ticket |
@@ -94,7 +94,7 @@ CineBook is a full-stack online movie ticket booking system developed as a colle
 - **Eclipse IDE** — Development environment
 
 ### Payment
-- **eSewa Sandbox** — Payment gateway integration
+- **eSewa/Khalti Sandbox** — Payment gateway integration
 
 ---
 
@@ -205,6 +205,14 @@ movies ──< showtimes ──< seats
 customers ──< bookings ──< booking_seats
 
 ---
+💜 Khalti Sandbox Credentials
+### Sandbox Test Credentials
+| Field | Value |
+|---|---|
+| Khalti ID | `9800000001 to 9800000005` |
+| Password | `1111` |
+| OTP/Token | `987654` |
+
 
 ## 💚 eSewa Payment
 
