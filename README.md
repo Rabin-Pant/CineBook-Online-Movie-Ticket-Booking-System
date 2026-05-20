@@ -205,7 +205,22 @@ movies ──< showtimes ──< seats
 customers ──< bookings ──< booking_seats
 
 ---
-💜 Khalti Sandbox Credentials
+## 💜 Khalti Sandbox Credentials
+
+CineBook uses **Khalti Sandbox** for payment processing.
+
+Select Seats
+↓
+Proceed to Payment
+↓
+Redirect to eSewa Sandbox
+↓
+Login with test credentials
+↓
+Payment Confirmed
+↓
+Booking Confirmed ✅
+
 ### Sandbox Test Credentials
 | Field | Value |
 |---|---|
