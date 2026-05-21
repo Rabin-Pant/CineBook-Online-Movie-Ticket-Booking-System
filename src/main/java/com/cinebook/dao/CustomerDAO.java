@@ -216,6 +216,138 @@ public class CustomerDAO {
         return false;
     }
     
+    public boolean updateProfilePicture(int customerId, String picturePath) {
+        String sql = "UPDATE customers SET profile_picture = ? WHERE customer_id = ?";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, picturePath);
+            ps.setInt(2, customerId);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        
+    }
+    public boolean updateProfile(int customerId, String fullName, String phone) {
+        String sql = "UPDATE customers SET full_name = ?, phone = ? " +
+                     "WHERE customer_id = ?";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, fullName);
+            ps.setString(2, phone);
+            ps.setInt(3, customerId);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    public boolean emailExists(String email) {
+        String sql = "SELECT customer_id FROM customers WHERE LOWER(email) = ?";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, email.trim().toLowerCase());
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    public boolean saveVerificationToken(int customerId, 
+            String token, 
+            java.sql.Timestamp expiry) {
+String sql = "UPDATE customers SET verification_token = ?, " +
+"token_expiry = ? WHERE customer_id = ?";
+try (Connection con = DBConnection.getConnection();
+PreparedStatement ps = con.prepareStatement(sql)) {
+ps.setString(1, token);
+ps.setTimestamp(2, expiry);
+ps.setInt(3, customerId);
+return ps.executeUpdate() > 0;
+} catch (SQLException e) {
+e.printStackTrace();
+return false;
+}
+}
+
+public Customer findByVerificationToken(String token) {
+String sql = "SELECT * FROM customers WHERE verification_token = ? " +
+"AND token_expiry > NOW()";
+try (Connection con = DBConnection.getConnection();
+PreparedStatement ps = con.prepareStatement(sql)) {
+ps.setString(1, token);
+ResultSet rs = ps.executeQuery();
+if (rs.next()) return extractCustomer(rs);
+} catch (SQLException e) {
+e.printStackTrace();
+}
+return null;
+}
+
+public boolean verifyCustomer(int customerId) {
+String sql = "UPDATE customers SET is_verified = TRUE, " +
+"verification_token = NULL, token_expiry = NULL " +
+"WHERE customer_id = ?";
+try (Connection con = DBConnection.getConnection();
+PreparedStatement ps = con.prepareStatement(sql)) {
+ps.setInt(1, customerId);
+return ps.executeUpdate() > 0;
+} catch (SQLException e) {
+e.printStackTrace();
+return false;
+}
+}
+
+public boolean saveResetToken(int customerId,
+     String token,
+     java.sql.Timestamp expiry) {
+String sql = "UPDATE customers SET reset_token = ?, " +
+"reset_token_expiry = ? WHERE customer_id = ?";
+try (Connection con = DBConnection.getConnection();
+PreparedStatement ps = con.prepareStatement(sql)) {
+ps.setString(1, token);
+ps.setTimestamp(2, expiry);
+ps.setInt(3, customerId);
+return ps.executeUpdate() > 0;
+} catch (SQLException e) {
+e.printStackTrace();
+return false;
+}
+}
+
+public Customer findByResetToken(String token) {
+String sql = "SELECT * FROM customers WHERE reset_token = ? " +
+"AND reset_token_expiry > NOW()";
+try (Connection con = DBConnection.getConnection();
+PreparedStatement ps = con.prepareStatement(sql)) {
+ps.setString(1, token);
+ResultSet rs = ps.executeQuery();
+if (rs.next()) return extractCustomer(rs);
+} catch (SQLException e) {
+e.printStackTrace();
+}
+return null;
+}
+
+public boolean resetPassword(int customerId, String hashedPassword) {
+String sql = "UPDATE customers SET password = ?, " +
+"reset_token = NULL, reset_token_expiry = NULL " +
+"WHERE customer_id = ?";
+try (Connection con = DBConnection.getConnection();
+PreparedStatement ps = con.prepareStatement(sql)) {
+ps.setString(1, hashedPassword);
+ps.setInt(2, customerId);
+return ps.executeUpdate() > 0;
+} catch (SQLException e) {
+e.printStackTrace();
+return false;
+}
+}
+    
     // ========== HELPER METHODS ==========
     
     private Customer extractCustomer(ResultSet rs) throws SQLException {
@@ -226,12 +358,9 @@ public class CustomerDAO {
         c.setPassword(rs.getString("password"));
         c.setPhone(rs.getString("phone"));
         c.setCreatedAt(rs.getTimestamp("created_at"));
-        // ✅ Safely read is_active
-        try {
-            c.setActive(rs.getBoolean("is_active"));
-        } catch (SQLException e) {
-            c.setActive(true); // default to active if column missing
-        }
+        c.setProfilePicture(rs.getString("profile_picture"));
+        try { c.setActive(rs.getBoolean("is_active")); } 
+        catch (SQLException e) { c.setActive(true); }
         return c;
     }
 }
