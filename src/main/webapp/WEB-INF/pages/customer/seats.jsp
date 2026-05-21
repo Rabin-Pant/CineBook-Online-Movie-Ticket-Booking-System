@@ -44,10 +44,8 @@
         </div>
     </div>
 
-    <!-- Seat Map Form -->
-    <form id="bookingForm"
-          action="${pageContext.request.contextPath}/customer/esewa-payment"
-          method="post">
+    <!-- Seat Map Form — action set dynamically by submitBooking() -->
+    <form id="bookingForm" action="" method="post">
 
         <input type="hidden" name="showtimeId" value="${showtime.showtimeId}" />
         <input type="hidden" name="totalAmount" id="totalAmountField" value="0" />
@@ -56,14 +54,12 @@
             <c:forEach var="seat" items="${seats}">
                 <c:choose>
                     <c:when test="${seat.booked}">
-                        <%-- Booked seat - not clickable --%>
                         <div class="seat booked"
                              title="Seat ${seat.seatNumber} - Booked">
                             ${seat.seatNumber}
                         </div>
                     </c:when>
                     <c:otherwise>
-                        <%-- Available seat - clickable --%>
                         <div class="seat available"
                              id="seat-${seat.seatId}"
                              title="Seat ${seat.seatNumber} - Available"
@@ -87,11 +83,28 @@
                 <span>Price per seat: <strong>Rs. ${showtime.price}</strong></span>
                 <span>Total: <strong id="totalPrice">Rs. 0</strong></span>
             </div>
-            <button type="button" class="btn btn-primary"
-                    id="bookBtn" disabled
-                    onclick="submitBooking()">
-                Proceed to Payment
-            </button>
+
+            <!-- Payment method buttons — shown only when at least 1 seat is selected -->
+            <div id="paymentButtons" style="display:none; flex-direction:column; align-items:center; gap:10px; margin-top:12px;">
+                <div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center;">
+                    <button type="button" class="btn btn-primary"
+                            id="khaltiBtn" disabled
+                            onclick="submitBooking('khalti')"
+                            style="background:#5C2D91; border-color:#5C2D91;">
+                        💜 Pay with Khalti
+                    </button>
+                    <button type="button" class="btn btn-primary"
+                            id="esewaBtn" disabled
+                            onclick="submitBooking('esewa')"
+                            style="background:#60bb46; border-color:#60bb46;">
+                        💚 Pay with eSewa
+                    </button>
+                </div>
+                <p style="font-size:0.82rem; color:#888; margin:0; text-align:center;">
+                    ⚠️ If one payment method is unavailable, please try the other.
+                </p>
+            </div>
+
         </div>
 
     </form>
@@ -100,21 +113,20 @@
 
 <script>
     const pricePerSeat = parseFloat('${showtime.price}');
-    let selectedSeats = [];
+    const contextPath  = '${pageContext.request.contextPath}';
+    let selectedSeats  = [];
 
     function toggleSeat(seatId, seatNumber) {
-        const seatDiv   = document.getElementById('seat-' + seatId);
-        const checkbox  = document.getElementById('check-' + seatId);
-        const index     = selectedSeats.indexOf(seatId);
+        const seatDiv  = document.getElementById('seat-' + seatId);
+        const checkbox = document.getElementById('check-' + seatId);
+        const index    = selectedSeats.indexOf(seatId);
 
         if (index === -1) {
-            // Select seat
             selectedSeats.push(seatId);
             seatDiv.classList.remove('available');
             seatDiv.classList.add('selected');
             checkbox.checked = true;
         } else {
-            // Deselect seat
             selectedSeats.splice(index, 1);
             seatDiv.classList.remove('selected');
             seatDiv.classList.add('available');
@@ -131,10 +143,14 @@
         document.getElementById('selectedCount').textContent = count;
         document.getElementById('totalPrice').textContent    = 'Rs. ' + total.toFixed(2);
         document.getElementById('totalAmountField').value    = total.toFixed(2);
-        document.getElementById('bookBtn').disabled          = count === 0;
+
+        const hasSeats = count > 0;
+        document.getElementById('paymentButtons').style.display = hasSeats ? 'flex' : 'none';
+        document.getElementById('esewaBtn').disabled  = !hasSeats;
+        document.getElementById('khaltiBtn').disabled = !hasSeats;
     }
 
-    function submitBooking() {
+    function submitBooking(gateway) {
         if (selectedSeats.length === 0) {
             alert('Please select at least one seat!');
             return;
@@ -142,7 +158,16 @@
 
         const total = selectedSeats.length * pricePerSeat;
         document.getElementById('totalAmountField').value = total.toFixed(2);
-        document.getElementById('bookingForm').submit();
+
+        // Point the form to the chosen payment gateway
+        const form = document.getElementById('bookingForm');
+        if (gateway === 'khalti') {
+            form.action = contextPath + '/customer/khalti-payment';
+        } else {
+            form.action = contextPath + '/customer/esewa-payment';
+        }
+
+        form.submit();
     }
 </script>
 
