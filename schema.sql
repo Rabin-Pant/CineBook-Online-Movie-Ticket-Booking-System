@@ -137,7 +137,7 @@ INSERT INTO admins (
 ) VALUES (
     'Super Admin',
     'admin@cinebook.com',
-    '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy',
+    '$2a$12$t2Y8aSrOm2qAKMECvEPH/OJ0IKOYuzJ7KFhEZ.klWPRRmZmyRQ/yu',
     '9800000001',
     'super_admin',
     TRUE
