@@ -34,7 +34,7 @@
 
 ## 📖 About
 
-CineBook is a full-stack online movie ticket booking system developed as a college project. It allows customers to browse movies, select showtimes, choose seats interactively, and pay securely via Khalti or eSewa payment gateways. Administrators can manage movies, showtimes, bookings, and customers through a dedicated admin panel with revenue analytics. Customers can also contact support directly through the built-in contact system with in-app admin replies.
+CineBook is a full-stack online movie ticket booking system developed as a personal project. It allows customers to browse movies, select showtimes, choose seats interactively, and pay securely via Khalti or eSewa payment gateways. Administrators can manage movies, showtimes, bookings, and customers through a dedicated admin panel with revenue analytics. Customers can also contact support directly through the built-in contact system with in-app admin replies.
 
 ---
 
