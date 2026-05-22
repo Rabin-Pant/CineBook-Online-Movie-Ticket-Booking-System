@@ -236,6 +236,8 @@ Booking Confirmed ✅
 | MPIN | `1111` |
 | OTP | `987654` |
 
+![Khalti](images/Khalti.png)
+
 ### 💚 eSewa Sandbox Credentials
 | Field | Value |
 |---|---|
@@ -243,6 +245,7 @@ Booking Confirmed ✅
 | Password | `Nepal@123` |
 | OTP/Token | `123456` |
 
+![Esewa](images/Esewa.png)
 > ⚠️ Sandbox only — no real money involved
 >
 > ⚠️ eSewa sandbox may occasionally be unavailable. Use Khalti as fallback.
