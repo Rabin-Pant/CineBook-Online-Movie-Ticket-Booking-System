@@ -1,3 +1,29 @@
+/*back link styling */
+.back-link {
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    padding: 0.5rem 1rem;
+    background: #f0f0f5;
+    color: #1a1a2e;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: 30px;
+    transition: all 0.2s ease;
+}
+
+.back-link:hover {
+    background: #e94560;
+    color: #fff;
+    transform: translateX(-4px);
+}
+
+/* Page title spacing */
+.page-title {
+    margin-bottom: 1.5rem;
+    color: #1a1a2e;
+}
+
 .showtime-info-bar {
     display: flex;
     gap: 24px;
