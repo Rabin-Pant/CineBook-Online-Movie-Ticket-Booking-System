@@ -269,7 +269,7 @@ Register at `/customer/register` with any email and password.
 ## 🏗️ Architecture
 
 CineBook follows **MVC (Model-View-Controller)** architecture:
-
+```
 Browser Request
 ↓
 Filter (Auth Check)
@@ -285,7 +285,7 @@ MySQL Database
 Model (POJO)
 ↓
 JSP View (Response)
-
+```
 ---
 
 ## 🔒 Security Features
