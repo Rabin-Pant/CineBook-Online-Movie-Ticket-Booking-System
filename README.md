@@ -216,7 +216,7 @@ customers ──< bookings ──< booking_seats
 CineBook supports **two payment gateways** — Khalti and eSewa sandbox. If one is unavailable, use the other.
 
 ### Payment Flow
-
+```
 Select Seats
 ↓
 Proceed to Payment
@@ -228,7 +228,7 @@ Login with test credentials
 Payment Confirmed
 ↓
 Booking Confirmed ✅
-
+```
 ### 💜 Khalti Sandbox Credentials
 | Field | Value |
 |---|---|
