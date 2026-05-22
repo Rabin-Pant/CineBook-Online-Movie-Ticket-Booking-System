@@ -10,7 +10,7 @@
 
 **A full-stack web-based movie ticket booking system built with Java JSP/Servlets, JDBC, and MySQL.**
 
-[Features](#-features) • [Tech Stack](#-tech-stack) • [Setup](#-setup-instructions) • [Payment](#-esewa-payment)
+[Features](#-features) • [Tech Stack](#-tech-stack) • [Setup](#-setup-instructions) • [Payment](#-payment-gateways)
 
 </div>
 
@@ -24,7 +24,7 @@
 - [Project Structure](#-project-structure)
 - [Setup Instructions](#-setup-instructions)
 - [Database Schema](#-database-schema)
-- [eSewa Payment](#-esewa-payment)
+- [Payment Gateways](#-payment-gateways)
 - [Default Credentials](#-default-credentials)
 - [Architecture](#-architecture)
 - [Security Features](#-security-features)
@@ -34,7 +34,7 @@
 
 ## 📖 About
 
-CineBook is a full-stack online movie ticket booking system developed as a college project. It allows customers to browse movies, select showtimes, choose seats interactively, and pay securely via eSewa payment gateway. Administrators can manage movies, showtimes, bookings, and customers through a dedicated admin panel with revenue analytics.
+CineBook is a full-stack online movie ticket booking system developed as a college project. It allows customers to browse movies, select showtimes, choose seats interactively, and pay securely via Khalti or eSewa payment gateways. Administrators can manage movies, showtimes, bookings, and customers through a dedicated admin panel with revenue analytics. Customers can also contact support directly through the built-in contact system with in-app admin replies.
 
 ---
 
@@ -48,12 +48,14 @@ CineBook is a full-stack online movie ticket booking system developed as a colle
 | 🔍 Movie Search | Search by title, genre, language |
 | 🕐 View Showtimes | Only future showtimes shown |
 | 💺 Seat Selection | Interactive live seat map |
-| 💳 Payment eSewa/Khalti | Secure sandbox payment gateway |
+| 💜 Khalti Payment | Khalti sandbox payment gateway |
+| 💚 eSewa Payment | eSewa sandbox payment gateway |
 | 🎟️ Booking History | View all past and current bookings |
 | ❌ Cancel Booking | 8% cancellation fee, refund within 24hrs |
 | 🖨️ Print Ticket | Download booking as PDF ticket |
 | 👤 Profile Management | Update name, phone, profile picture |
 | 🔑 Change Password | Secure password update |
+| 📬 Contact Support | Send messages to admin, view replies in-app |
 
 ### 🔧 Admin Features
 | Feature | Description |
@@ -65,6 +67,7 @@ CineBook is a full-stack online movie ticket booking system developed as a colle
 | 👥 Manage Customers | Block/unblock customer accounts |
 | 📈 Revenue Reports | Confirmed revenue + cancellation fees |
 | 📉 Charts | Line chart, doughnut chart, bar chart |
+| 📬 Contact Messages | View and reply to customer support messages |
 
 ---
 
@@ -94,7 +97,8 @@ CineBook is a full-stack online movie ticket booking system developed as a colle
 - **Eclipse IDE** — Development environment
 
 ### Payment
-- **eSewa/Khalti Sandbox** — Payment gateway integration
+- **Khalti Sandbox** — Primary payment gateway
+- **eSewa Sandbox** — Secondary payment gateway
 
 ---
 
@@ -122,6 +126,7 @@ CineBook/
 │           │   ├── lib/              ← Runtime JAR files
 │           │   └── web.xml
 │           ├── index.jsp
+│           ├── contact.jsp
 │           ├── customer-login.jsp
 │           ├── customer-register.jsp
 │           └── admin-login.jsp
@@ -205,33 +210,10 @@ movies ──< showtimes ──< seats
 customers ──< bookings ──< booking_seats
 
 ---
-## 💜 Khalti Sandbox Credentials
 
-CineBook uses **Khalti Sandbox** for payment processing.
+## 💳 Payment Gateways
 
-Select Seats
-↓
-Proceed to Payment
-↓
-Redirect to eSewa Sandbox
-↓
-Login with test credentials
-↓
-Payment Confirmed
-↓
-Booking Confirmed ✅
-
-### Sandbox Test Credentials
-| Field | Value |
-|---|---|
-| Khalti ID | `9800000001 to 9800000005` |
-| Password | `1111` |
-| OTP/Token | `987654` |
-
-
-## 💚 eSewa Payment
-
-CineBook uses **eSewa Sandbox** for payment processing.
+CineBook supports **two payment gateways** — Khalti and eSewa sandbox. If one is unavailable, use the other.
 
 ### Payment Flow
 
@@ -247,7 +229,14 @@ Payment Confirmed
 ↓
 Booking Confirmed ✅
 
-### Sandbox Test Credentials
+### 💜 Khalti Sandbox Credentials
+| Field | Value |
+|---|---|
+| Khalti ID | `9800000001` to `9800000005` |
+| MPIN | `1111` |
+| OTP | `987654` |
+
+### 💚 eSewa Sandbox Credentials
 | Field | Value |
 |---|---|
 | eSewa ID | `9806800001` |
@@ -255,10 +244,12 @@ Booking Confirmed ✅
 | OTP/Token | `123456` |
 
 > ⚠️ Sandbox only — no real money involved
+>
+> ⚠️ eSewa sandbox may occasionally be unavailable. Use Khalti as fallback.
 
 ### Cancellation Policy
 - 8% cancellation fee deducted
-- Remaining 92% refunded to eSewa within 24 hours
+- Remaining 92% refunded to original payment method (Khalti or eSewa) within 24 hours
 
 ---
 
@@ -307,6 +298,7 @@ JSP View (Response)
 - ✅ SQL injection prevention via PreparedStatements
 - ✅ File type validation for uploads
 - ✅ Customer block/unblock by admin
+- ✅ Contact form restricted to logged-in customers only
 
 ---
 
@@ -350,7 +342,7 @@ com.itextpdf:itextpdf:5.5.13.3
 - [ ] Email notifications for booking confirmation
 - [ ] QR code ticket generation
 - [ ] Mobile application (Android/iOS)
-- [ ] Real eSewa/Khalti payment integration
+- [ ] Khalti and eSewa production keys (currently sandbox)
 - [ ] Movie trailer YouTube embed
 - [ ] Movie ratings and reviews by customers
 - [ ] Promo/discount code system
