@@ -76,85 +76,78 @@
     <!-- MIDDLE: Form Panel -->
     <div class="contact-form-panel">
 
-        <c:choose>
-            <c:when test="${not empty sessionScope.loggedInCustomer}">
+       <div id="contactFormSection">
+    <h2 class="form-title">Send Us a Message</h2>
+    <p class="form-subtitle">Fill in the details below and we'll be in touch shortly.</p>
 
-                <div id="contactFormSection">
-                    <h2 class="form-title">Send Us a Message</h2>
-                    <p class="form-subtitle">Fill in the details below and we'll be in touch shortly.</p>
+   <div class="form-row">
+    <div class="form-group">
+        <label>Full Name <span>*</span></label>
+        <input type="text" id="contactName" placeholder="Your full name" maxlength="60"
+               value="${not empty sessionScope.loggedInCustomer ? sessionScope.loggedInCustomer.fullName : ''}" />
+    </div>
+    <div class="form-group">
+        <label>Email Address <span>*</span></label>
+        <input type="email" id="contactEmail" placeholder="you@example.com"
+               value="${not empty sessionScope.loggedInCustomer ? sessionScope.loggedInCustomer.email : ''}" />
+    </div>
+</div>
 
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Full Name <span>*</span></label>
-                            <input type="text" id="contactName" placeholder="Your full name" maxlength="60"
-                                   value="${sessionScope.loggedInCustomer.fullName}" />
-                        </div>
-                        <div class="form-group">
-                            <label>Email Address <span>*</span></label>
-                            <input type="email" id="contactEmail" placeholder="you@example.com"
-                                   value="${sessionScope.loggedInCustomer.email}" readonly
-                                   style="background:#f0f0f0; cursor:not-allowed;" />
-                        </div>
-                    </div>
+<div class="form-row">
+    <div class="form-group">
+        <label>Phone Number <span>*</span></label>
+        <input type="tel" id="contactPhone" placeholder="+977-98XXXXXXXX" maxlength="20"
+               value="${not empty sessionScope.loggedInCustomer ? sessionScope.loggedInCustomer.phone : ''}" />
+    </div>
+    <div class="form-group">
+        <label>Subject <span>*</span></label>
+        <select id="contactSubject">
+            <option value="" disabled selected>Select a subject...</option>
+            <option value="Booking Issue">🎟️ Booking Issue</option>
+            <option value="Payment Problem">💳 Payment Problem</option>
+            <option value="Refund / Cancellation">💰 Refund / Cancellation</option>
+            <option value="Account Help">👤 Account Help</option>
+            <option value="Technical Error">🔧 Technical Error</option>
+            <option value="General Feedback">💬 General Feedback</option>
+            <option value="Other">📌 Other</option>
+        </select>
+    </div>
+</div>
 
-                    <div class="form-group">
-                        <label>Subject <span>*</span></label>
-                        <select id="contactSubject">
-                            <option value="" disabled selected>Select a subject...</option>
-                            <option value="Booking Issue">🎟️ Booking Issue</option>
-                            <option value="Payment Problem">💳 Payment Problem</option>
-                            <option value="Refund / Cancellation">💰 Refund / Cancellation</option>
-                            <option value="Account Help">👤 Account Help</option>
-                            <option value="Technical Error">🔧 Technical Error</option>
-                            <option value="General Feedback">💬 General Feedback</option>
-                            <option value="Other">📌 Other</option>
-                        </select>
-                    </div>
+<div class="form-group full">
+    <label>Message <span>*</span></label>
+    <textarea id="contactMessage" placeholder="Describe your issue or question in detail..." maxlength="500"></textarea>
+    <div class="char-counter" id="charCounter">0 / 500</div>
+</div>
 
-                    <div class="form-group full">
-                        <label>Message <span>*</span></label>
-                        <textarea id="contactMessage" placeholder="Describe your issue or question in detail..." maxlength="500"></textarea>
-                        <div class="char-counter" id="charCounter">0 / 500</div>
-                    </div>
+<button class="btn-submit" id="submitBtn" onclick="submitContactForm()">
+    <i class="fas fa-paper-plane"></i>
+    <span id="submitBtnText">Send Message</span>
+</button>
 
-                    <button class="btn-submit" id="submitBtn" onclick="submitContactForm()">
-                        <i class="fas fa-paper-plane"></i>
-                        <span id="submitBtnText">Send Message</span>
-                    </button>
-                </div>
+    <div class="form-group full">
+        <label>Message <span>*</span></label>
+        <textarea id="contactMessage" placeholder="Describe your issue or question in detail..." maxlength="500"></textarea>
+        <div class="char-counter" id="charCounter">0 / 500</div>
+    </div>
 
-                <!-- Success State -->
-                <div class="success-state" id="successState">
-                    <div class="success-icon"><i class="fas fa-check"></i></div>
-                    <h3>Message Sent!</h3>
-                    <p>Thank you for reaching out. We've received your message and
-                       will get back to you within 24 hours.</p>
-                    <button class="btn-back" onclick="resetForm()">
-                        <i class="fas fa-arrow-left"></i>
-                        Send Another Message
-                    </button>
-                </div>
+    <button class="btn-submit" id="submitBtn" onclick="submitContactForm()">
+        <i class="fas fa-paper-plane"></i>
+        <span id="submitBtnText">Send Message</span>
+    </button>
+</div>
 
-            </c:when>
-            <c:otherwise>
-
-                <div style="text-align:center; padding:60px 20px;">
-                    <p style="font-size:3rem; margin-bottom:16px;">🔒</p>
-                    <h3 style="font-size:1.2rem; font-weight:700; color:#1a1a2e; margin-bottom:10px;">
-                        Login Required
-                    </h3>
-                    <p style="font-size:0.9rem; color:#888; line-height:1.7; margin-bottom:26px;">
-                        You need to be logged in to send us a message.<br>
-                        Please login with your account to continue.
-                    </p>
-                    <a href="${pageContext.request.contextPath}/customer/login"
-                       style="display:inline-block; padding:13px 32px; background:linear-gradient(135deg,#e94560,#c73e56); color:#fff; border-radius:50px; text-decoration:none; font-weight:600; font-size:0.9rem; box-shadow:0 4px 15px rgba(233,69,96,0.35);">
-                        <i class="fas fa-sign-in-alt"></i> &nbsp;Login to Continue
-                    </a>
-                </div>
-
-            </c:otherwise>
-        </c:choose>
+<!-- Success State -->
+<div class="success-state" id="successState">
+    <div class="success-icon"><i class="fas fa-check"></i></div>
+    <h3>Message Sent!</h3>
+    <p>Thank you for reaching out. We've received your message and
+       will get back to you within 24 hours.</p>
+    <button class="btn-back" onclick="resetForm()">
+        <i class="fas fa-arrow-left"></i>
+        Send Another Message
+    </button>
+</div>
 
     </div>
 
@@ -341,9 +334,11 @@ function submitContactForm() {
     const email   = document.getElementById('contactEmail').value.trim();
     const subject = document.getElementById('contactSubject').value;
     const message = document.getElementById('contactMessage').value.trim();
+    const phone   = document.getElementById('contactPhone').value.trim();
 
     if (!name)                         { shake('contactName');    return; }
     if (!email || !email.includes('@')) { shake('contactEmail');   return; }
+    if (!phone)                        { shake('contactPhone');   return; }
     if (!subject)                      { shake('contactSubject'); return; }
     if (message.length < 10)           { shake('contactMessage'); return; }
 
@@ -356,6 +351,7 @@ function submitContactForm() {
     const params = new URLSearchParams();
     params.append('name',    name);
     params.append('email',   email);
+    params.append('phone',   phone);
     params.append('subject', subject);
     params.append('message', message);
 
