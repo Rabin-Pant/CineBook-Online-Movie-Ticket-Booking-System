@@ -145,5 +145,12 @@
                 📈 Reports
             </a>
         </li>
+        
+        <li>
+    <a href="${pageContext.request.contextPath}/admin/contact-messages"
+       class="${currentURI.contains('contact') ? 'active' : ''}">
+        📬 Messages
+    </a>
+</li>
     </ul>
 </aside>
