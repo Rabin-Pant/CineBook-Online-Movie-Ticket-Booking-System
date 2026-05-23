@@ -146,9 +146,4 @@
             </a>
         </li>
     </ul>
-    
-    <div class="sidebar-footer">
-        <p>CineBook v1.0</p>
-        <p>© 2025 Admin Panel</p>
-    </div>
 </aside>
