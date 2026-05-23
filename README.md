@@ -185,10 +185,6 @@ private static final String PASSWORD = ""; // your MySQL password
 2. Add **Apache Tomcat 10.1**
 3. Right click project → **Run As → Run on Server**
 
-### Step 6 — Access Application
-Customer:  http://localhost:8080/CineBook/
-Admin:     http://localhost:8080/CineBook/admin/login
-
 ---
 
 ## 🗄️ Database Schema
