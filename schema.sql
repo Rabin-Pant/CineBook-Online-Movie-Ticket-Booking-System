@@ -129,7 +129,7 @@ CREATE TABLE IF NOT EXISTS booking_seats (
 
 -- ================================================
 -- DEFAULT ADMIN USER
--- Email: admin@cinebook.com
+-- Email: admin@gmail.com
 -- Password: password123 (BCrypt hashed)
 -- ================================================
 INSERT INTO admins (
