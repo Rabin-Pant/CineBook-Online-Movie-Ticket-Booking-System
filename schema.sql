@@ -1,5 +1,5 @@
 -- ================================================
--- CineBook Database Schema (Final)
+-- CineBook Database Schema
 -- Online Movie Ticket Booking System
 -- Version: 2.0
 -- ================================================
