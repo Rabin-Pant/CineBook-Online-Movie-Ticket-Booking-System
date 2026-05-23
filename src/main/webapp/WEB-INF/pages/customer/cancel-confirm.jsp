@@ -45,7 +45,7 @@
                     </span>
                 </div>
                 <div class="ticket-row total">
-                    <span class="label">💚 Refund to eSewa</span>
+                    <span class="label"><c:choose><c:when test="${booking.paymentMethod == 'khalti'}">💜 Refund to Khalti</c:when><c:otherwise>💚 Refund to eSewa</c:otherwise></c:choose></span>
                     <span class="value" style="color:green;">
                         Rs. ${refundAmount}
                     </span>
@@ -53,7 +53,7 @@
             </div>
 
             <div class="ticket-footer">
-                ⏱ Refund will be credited to your eSewa wallet within 24 hours
+                ⏱ <c:choose><c:when test="${booking.paymentMethod == 'khalti'}">⏱ Refund will be credited to your Khalti wallet within 24 hours</c:when><c:otherwise>⏱ Refund will be credited to your eSewa wallet within 24 hours</c:otherwise></c:choose>
             </div>
         </div>
 

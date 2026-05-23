@@ -18,12 +18,12 @@
         </div>
 
         <%-- Error / Success Messages --%>
-        <c:if test="${not empty error}">
-            <div class="alert alert-error">
-                <i class="fas fa-exclamation-circle"></i>
-                ${error}
-            </div>
-        </c:if>
+      <c:if test="${not empty error}">
+    <div class="alert alert-error" style="display:block; line-height:1.6;">
+        <i class="fas fa-exclamation-circle"></i>
+        <%= request.getAttribute("error") %>
+    </div>
+</c:if>
         <c:if test="${not empty param.success}">
             <div class="alert alert-success">
                 <i class="fas fa-check-circle"></i>

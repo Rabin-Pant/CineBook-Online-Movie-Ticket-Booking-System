@@ -8,7 +8,7 @@
 <%@ include file="components/navbar.jsp" %>
 
 
-<!-- ===== HERO SECTION ===== -->
+<!-- ===== HERO SECTION - FULL SLIDER ===== -->
 <section class="hero-slider">
 
     <div class="slider-track" id="sliderTrack">
@@ -34,7 +34,7 @@
                     <div class="hero-features">
                         <div class="feature-pill">🎟️ Instant Booking</div>
                         <div class="feature-pill">💺 Live Seat Selection</div>
-                        <div class="feature-pill">💳 eSewa Payment</div>
+                        <div class="feature-pill">💳 Online Payment</div>
                     </div>
                     <div class="hero-buttons">
                         <a href="${pageContext.request.contextPath}/customer/movies"

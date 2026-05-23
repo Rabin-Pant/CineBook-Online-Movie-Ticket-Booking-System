@@ -9,7 +9,7 @@
             🎬 CineBook
         </a>
 
-      <!-- Search Bar -->
+      <!-- Search Bar  -->
 <div class="nav-search-wrapper">
     <form id="searchForm"
           action="${pageContext.request.contextPath}/customer/search"
@@ -41,32 +41,48 @@
         <ul class="nav-links" id="navLinks">
             <li><a href="${pageContext.request.contextPath}/">Home</a></li>
             <li><a href="${pageContext.request.contextPath}/customer/movies">Movies</a></li>
+            <li><a href="${pageContext.request.contextPath}/contact">Contact</a></li>
 
             <c:choose>
                 <%-- Customer logged in --%>
-                <c:when test="${not empty sessionScope.loggedInCustomer}">
-                    <li>
-                        <a href="${pageContext.request.contextPath}/customer/dashboard">
-                            Dashboard
-                        </a>
-                    </li>
-                    <li>
-                        <a href="${pageContext.request.contextPath}/customer/bookings">
-                            My Bookings
-                        </a>
-                    </li>
-                    <li>
-                        <a href="${pageContext.request.contextPath}/customer/profile">
-                            Profile
-                        </a>
-                    </li>
-                    <li class="logout-li">
-                        <a href="${pageContext.request.contextPath}/customer/logout"
-                           class="btn-logout">
-                            Logout (${sessionScope.loggedInCustomer.fullName})
-                        </a>
-                    </li>
+<%-- Customer logged in --%>
+<c:when test="${not empty sessionScope.loggedInCustomer}">
+    <li>
+        <a href="${pageContext.request.contextPath}/customer/dashboard">
+            Dashboard
+        </a>
+    </li>
+    <li>
+        <a href="${pageContext.request.contextPath}/customer/bookings">
+            My Bookings
+        </a>
+    </li>
+    
+    <li class="nav-profile-item">
+        <a href="${pageContext.request.contextPath}/customer/profile" style="display: flex; align-items: center; gap: 8px;">
+            <c:choose>
+                <c:when test="${not empty sessionScope.loggedInCustomer.profilePicture}">
+                    <img src="${pageContext.request.contextPath}/uploads/${sessionScope.loggedInCustomer.profilePicture}" 
+                         alt="Avatar" 
+                         style="width: 28px; height: 28px; border-radius: 50%; object-fit: cover; border: 2px solid #e94560; box-shadow: 0 2px 6px rgba(0,0,0,0.3);" />
                 </c:when>
+                <c:otherwise>
+                    <div style="width: 28px; height: 28px; border-radius: 50%; background: #16213e; display: flex; align-items: center; justify-content: center; font-size: 12px; border: 1px solid rgba(255,255,255,0.2);">
+                        👤
+                    </div>
+                </c:otherwise>
+            </c:choose>
+            <span>Profile</span>
+        </a>
+    </li>
+
+    <li class="logout-li">
+        <a href="${pageContext.request.contextPath}/customer/logout"
+           class="btn-logout">
+            Logout (${sessionScope.loggedInCustomer.fullName})
+        </a>
+    </li>
+</c:when>
 
                 <%-- Admin logged in --%>
                 <c:when test="${not empty sessionScope.loggedInAdmin}">
@@ -117,7 +133,7 @@
     
     let isExpanded = false;
     
-    // if there's a search query in the URL
+    // Check if there's a search query in the URL
     const urlParams = new URLSearchParams(window.location.search);
     const hasQuery = urlParams.get('q') && urlParams.get('q').trim() !== '';
     

@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,8 +20,9 @@
             border-radius: 16px;
             padding: 40px;
             max-width: 400px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
         }
-        .esewa-logo { font-size: 3rem; margin-bottom: 16px; }
+        .esewa-logo { font-size: 3rem; margin-bottom: 16px; color: #60bb46; }
         h2 { margin-bottom: 8px; }
         p  { color: #bbb; margin-bottom: 24px; }
         .spinner {
@@ -30,8 +31,8 @@
             border: 4px solid rgba(255,255,255,0.3);
             border-top-color: #60bb46;
             border-radius: 50%;
-            animation: spin 1s linear infinite;
             margin: 0 auto;
+            animation: spin 1s linear infinite;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
     </style>
@@ -40,28 +41,29 @@
 <div class="redirect-card">
     <div class="esewa-logo">💚</div>
     <h2>Redirecting to eSewa</h2>
-    <p>Please wait while we redirect you to eSewa secure payment...</p>
+    <p>Please wait while we redirect you to eSewa secure payment gateway...</p>
     <div class="spinner"></div>
 
-    <form id="esewaForm" action="${esewaUrl}" method="POST" style="display:none;">
-        <input type="hidden" name="amount"                    value="${amount}"/>
-        <input type="hidden" name="tax_amount"                value="0"/>
-        <input type="hidden" name="total_amount"              value="${totalAmount}"/>
-        <input type="hidden" name="transaction_uuid"          value="${transactionUUID}"/>
-        <input type="hidden" name="product_code"              value="${merchantCode}"/>
-        <input type="hidden" name="product_service_charge"    value="0"/>
-        <input type="hidden" name="product_delivery_charge"   value="0"/>
-        <input type="hidden" name="success_url"               value="${successUrl}"/>
-        <input type="hidden" name="failure_url"               value="${failureUrl}"/>
-        <input type="hidden" name="signed_field_names"        value="total_amount,transaction_uuid,product_code"/>
-        <input type="hidden" name="signature"                 value="${signature}"/>
+    <form id="esewaForm" action="${requestScope.esewaUrl}" method="POST" style="display:none;">
+        <input type="hidden" name="amount"                    value="${requestScope.amount}" />
+        <input type="hidden" name="tax_amount"                value="0" />
+        <input type="hidden" name="total_amount"              value="${requestScope.totalAmount}" />
+        <input type="hidden" name="transaction_uuid"          value="${requestScope.transactionUUID}" />
+        <input type="hidden" name="product_code"              value="${requestScope.merchantCode}" />
+        <input type="hidden" name="product_service_charge"    value="0" />
+        <input type="hidden" name="product_delivery_charge"   value="0" />
+        <input type="hidden" name="success_url"               value="${requestScope.successUrl}" />
+        <input type="hidden" name="failure_url"               value="${requestScope.failureUrl}" />
+        <input type="hidden" name="signed_field_names"        value="total_amount,transaction_uuid,product_code" />
+        <input type="hidden" name="signature"                 value="${requestScope.signature}" />
     </form>
 </div>
 
 <script>
-    setTimeout(function() {
+    window.onload = function() {
+        // Automatically submit the normalized dataset parameters to the eSewa endpoint
         document.getElementById('esewaForm').submit();
-    }, 1500);
+    };
 </script>
 </body>
 </html>
