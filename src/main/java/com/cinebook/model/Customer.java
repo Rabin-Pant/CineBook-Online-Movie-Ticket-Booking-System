@@ -12,7 +12,7 @@ public class Customer {
     private Timestamp createdAt;
     private boolean active;
     private String profilePicture;
-
+    
     // Default constructor
     public Customer() {}
     
@@ -47,8 +47,8 @@ public class Customer {
     
     public boolean isActive() { return active; }
     public void setActive(boolean active) { this.active = active; }
-
-     public String getProfilePicture() { return profilePicture; }
+    
+    public String getProfilePicture() { return profilePicture; }
     public void setProfilePicture(String profilePicture) { 
         this.profilePicture = profilePicture;       
     }
