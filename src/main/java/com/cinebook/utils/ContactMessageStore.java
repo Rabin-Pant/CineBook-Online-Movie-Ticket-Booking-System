@@ -26,13 +26,14 @@ public class ContactMessageStore {
         private final String id;
         private final String name;
         private final String email;
+        private final String phone; 
         private final String subject;
         private final String message;
         private final String receivedAt;
         private final int    customerId;
         private final List<Reply> replies = new ArrayList<>();
 
-        public ContactMessage(String name, String email, String subject,
+        public ContactMessage(String name, String email, String phone, String subject,
                               String message, int customerId) {
             this.id          = String.valueOf(System.currentTimeMillis());
             this.name        = name;
@@ -40,6 +41,7 @@ public class ContactMessageStore {
             this.subject     = subject;
             this.message     = message;
             this.customerId  = customerId;
+            this.phone       = phone;
             this.receivedAt  = LocalDateTime.now()
                 .format(DateTimeFormatter.ofPattern("MMM dd, yyyy  hh:mm a"));
         }
@@ -47,6 +49,7 @@ public class ContactMessageStore {
         public String      getId()         { return id; }
         public String      getName()       { return name; }
         public String      getEmail()      { return email; }
+        public String getPhone()      { return phone; }
         public String      getSubject()    { return subject; }
         public String      getMessage()    { return message; }
         public String      getReceivedAt() { return receivedAt; }
@@ -62,10 +65,10 @@ public class ContactMessageStore {
     private static final List<ContactMessage> messages =
         Collections.synchronizedList(new ArrayList<>());
 
-    public static void add(String name, String email, String subject,
-                           String message, int customerId) {
-        messages.add(0, new ContactMessage(name, email, subject, message, customerId));
-    }
+    public static void add(String name, String email, String phone,
+            String subject, String message, int customerId) {
+messages.add(0, new ContactMessage(name, email, phone, subject, message, customerId));
+}
 
     public static List<ContactMessage> getAll() {
         return new ArrayList<>(messages);
