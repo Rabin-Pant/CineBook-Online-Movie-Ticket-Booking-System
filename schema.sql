@@ -127,6 +127,33 @@ CREATE TABLE IF NOT EXISTS booking_seats (
 );
 
 -- ================================================
+-- TABLE: contact_messages
+-- ================================================
+CREATE TABLE IF NOT EXISTS contact_messages (
+    message_id   INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id  INT DEFAULT -1,
+    name         VARCHAR(100) NOT NULL,
+    email        VARCHAR(100) NOT NULL,
+    phone        VARCHAR(20),
+    subject      VARCHAR(150) NOT NULL,
+    message      TEXT NOT NULL,
+    is_read      BOOLEAN DEFAULT FALSE,
+    created_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- ================================================
+-- TABLE: contact_replies
+-- ================================================
+CREATE TABLE IF NOT EXISTS contact_replies (
+    reply_id    INT AUTO_INCREMENT PRIMARY KEY,
+    message_id  INT NOT NULL,
+    reply_text  TEXT NOT NULL,
+    replied_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (message_id) REFERENCES contact_messages(message_id)
+        ON DELETE CASCADE
+);
+
+-- ================================================
 -- DEFAULT ADMIN USER
 -- Email: admin@gmail.com
 -- Password: password123 (BCrypt hashed)
