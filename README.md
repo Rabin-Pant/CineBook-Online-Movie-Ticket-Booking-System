@@ -199,6 +199,8 @@ private static final String PASSWORD = ""; // your MySQL password
 | `seats` | Auto-generated seats per showtime |
 | `bookings` | Booking records with payment info |
 | `booking_seats` | Seat-booking mapping |
+| `contact_messages` | Customer support messages |
+| `contact_replies`  | Admin replies to messages |
 
 ### Key Relationships
 movies ──< showtimes ──< seats
@@ -215,9 +217,9 @@ CineBook supports **two payment gateways** — Khalti and eSewa sandbox. If one 
 ```
 Select Seats
 ↓
-Proceed to Payment
+Choose Payment Method (💜 Khalti or 💚 eSewa)
 ↓
-Redirect to eSewa Sandbox
+Redirect to Payment Sandbox
 ↓
 Login with test credentials
 ↓
@@ -297,7 +299,7 @@ JSP View (Response)
 - ✅ SQL injection prevention via PreparedStatements
 - ✅ File type validation for uploads
 - ✅ Customer block/unblock by admin
-- ✅ Contact form restricted to logged-in customers only
+- ✅ Contact form open to all users including guests
 
 ---
 
