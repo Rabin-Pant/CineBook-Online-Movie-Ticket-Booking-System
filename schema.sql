@@ -1,5 +1,5 @@
 -- ================================================
--- CineBook Database Schema
+-- CineBook Database Schema (Final)
 -- Online Movie Ticket Booking System
 -- Version: 2.0
 -- ================================================
@@ -37,7 +37,6 @@ CREATE TABLE IF NOT EXISTS customers (
     profile_picture  VARCHAR(255) DEFAULT NULL,
     created_at       TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
-
 -- ================================================
 -- TABLE: movies
 -- ================================================
