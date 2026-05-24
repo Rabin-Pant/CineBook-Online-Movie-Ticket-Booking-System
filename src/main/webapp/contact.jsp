@@ -278,7 +278,7 @@
                                                 </div>
                                                 <div class="reply-text">${reply.text}</div>
                                                 <div class="reply-time">
-                                                    <i class="fas fa-clock"></i> ${reply.sentAt}
+                                                    <i class="fas fa-clock"></i> ${reply.repliedAt}
                                                 </div>
                                             </div>
                                         </c:forEach>
@@ -291,7 +291,7 @@
                                     </c:if>
                                     
                                     <div class="msg-time">
-                                        <i class="fas fa-clock"></i> ${msg.receivedAt}
+                                       <i class="fas fa-clock"></i> ${msg.createdAt}
                                     </div>
                                     
                                 </div>
