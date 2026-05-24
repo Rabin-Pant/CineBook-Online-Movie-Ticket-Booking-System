@@ -114,17 +114,6 @@
     </div>
 </div>
 
-<div class="form-group full">
-    <label>Message <span>*</span></label>
-    <textarea id="contactMessage" placeholder="Describe your issue or question in detail..." maxlength="500"></textarea>
-    <div class="char-counter" id="charCounter">0 / 500</div>
-</div>
-
-<button class="btn-submit" id="submitBtn" onclick="submitContactForm()">
-    <i class="fas fa-paper-plane"></i>
-    <span id="submitBtnText">Send Message</span>
-</button>
-
     <div class="form-group full">
         <label>Message <span>*</span></label>
         <textarea id="contactMessage" placeholder="Describe your issue or question in detail..." maxlength="500"></textarea>
