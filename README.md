@@ -266,13 +266,11 @@ Booking Confirmed ✅
 - Go to this website: https://bcrypt-generator.com/
 - Then enter text to hash and copy the hash
 - In xampp phpmyadmin update admin table:
-  
+```  
 UPDATE admins
-
 SET password = 'Hash that you have generated'
-
 WHERE email = 'admin@gmail.com';
-
+```
 
 ### Customer Account
 Register at `/customer/register` with any email and password.
