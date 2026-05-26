@@ -21,6 +21,11 @@
                         ${messages.size()}
                     </span>
                 </c:if>
+                <c:if test="${unreadCount > 0}">
+                    <span style="font-size:0.75rem; background:#ffc107; color:#1a1a2e; padding:3px 10px; border-radius:20px; font-weight:700; margin-left:6px; vertical-align:middle;">
+                        ${unreadCount} unread
+                    </span>
+                </c:if>
             </h1>
             <c:if test="${not empty messages}">
                 <form method="post" action="${pageContext.request.contextPath}/admin/contact-messages"
@@ -44,7 +49,12 @@
             <c:otherwise>
                 <div style="display:flex; flex-direction:column; gap:20px;">
                     <c:forEach var="msg" items="${messages}">
-                        <div style="background:#fff; border-radius:16px; padding:22px 24px; border:1px solid #eee; box-shadow:0 4px 15px rgba(0,0,0,0.05); border-left:4px solid #e94560;">
+                        <div style="background:#fff; border-radius:16px; padding:22px 24px; border:1px solid ${msg.read ? '#eee' : 'rgba(233,69,96,0.25)'}; box-shadow:0 4px 15px rgba(0,0,0,0.05); border-left:4px solid ${msg.read ? '#ccc' : '#e94560'}; position:relative;">
+
+                            <!-- Unread dot -->
+                            <c:if test="${not msg.read}">
+                                <div style="position:absolute; top:16px; right:16px; width:10px; height:10px; background:#e94560; border-radius:50; box-shadow:0 0 6px rgba(233,69,96,0.6);"></div>
+                            </c:if>
 
                             <!-- Header -->
                             <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:14px; flex-wrap:wrap;">
@@ -76,13 +86,35 @@
                                         ${msg.subject}
                                     </span>
                                     <span style="font-size:0.73rem; color:#aaa;">
-                                        <i class="fas fa-clock"></i> ${msg.receivedAt}
+                                        <i class="fas fa-clock"></i> ${msg.createdAt}
                                     </span>
-                                    <c:if test="${msg.hasReplies()}">
-                                        <span style="font-size:0.72rem; background:#d4edda; color:#155724; padding:2px 10px; border-radius:20px; font-weight:600;">
-                                            ✅ Replied
-                                        </span>
-                                    </c:if>
+                                    <c:choose>
+                                        <c:when test="${msg.hasReplies()}">
+                                            <span style="font-size:0.72rem; background:#d4edda; color:#155724; padding:2px 10px; border-radius:20px; font-weight:600;">
+                                                ✅ Replied
+                                            </span>
+                                        </c:when>
+                                    </c:choose>
+                                    <c:choose>
+                                        <c:when test="${msg.read}">
+                                            <span style="font-size:0.72rem; background:#e9ecef; color:#666; padding:2px 10px; border-radius:20px; font-weight:600;">
+                                                ✔ Read
+                                            </span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <!-- Mark as Read button -->
+                                            <form method="post" action="${pageContext.request.contextPath}/admin/contact-messages" style="margin:0;">
+                                                <input type="hidden" name="action"    value="markRead" />
+                                                <input type="hidden" name="messageId" value="${msg.messageId}" />
+                                                <button type="submit"
+                                                        style="font-size:0.72rem; background:rgba(255,193,7,0.15); color:#856404; border:1px solid rgba(255,193,7,0.4); padding:3px 10px; border-radius:20px; font-weight:600; cursor:pointer; font-family:'Poppins',sans-serif; transition:all 0.2s;"
+                                                        onmouseover="this.style.background='rgba(255,193,7,0.3)'"
+                                                        onmouseout="this.style.background='rgba(255,193,7,0.15)'">
+                                                    👁 Mark as Read
+                                                </button>
+                                            </form>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </div>
                             </div>
 
@@ -103,7 +135,7 @@
                                                 ${reply.text}
                                             </div>
                                             <div style="font-size:0.72rem; color:rgba(255,255,255,0.4); margin-top:6px;">
-                                                <i class="fas fa-clock"></i> ${reply.sentAt}
+                                                <i class="fas fa-clock"></i> ${reply.repliedAt}
                                             </div>
                                         </div>
                                     </c:forEach>
@@ -113,7 +145,7 @@
                             <!-- Reply Form -->
                             <form method="post" action="${pageContext.request.contextPath}/admin/contact-messages">
                                 <input type="hidden" name="action"    value="reply" />
-                                <input type="hidden" name="messageId" value="${msg.id}" />
+                                <input type="hidden" name="messageId" value="${msg.messageId}" />
                                 <div style="margin-bottom:10px;">
                                     <textarea name="replyText"
                                               placeholder="Type your reply to ${msg.name}..."

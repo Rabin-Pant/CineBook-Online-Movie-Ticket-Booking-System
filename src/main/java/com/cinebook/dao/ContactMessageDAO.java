@@ -36,6 +36,7 @@ public class ContactMessageDAO {
         private final boolean      read;
         private final String       createdAt;
         private final List<Reply>  replies;
+        
 
         public ContactMessage(int messageId, int customerId, String name, String email,
                               String phone, String subject, String message,
