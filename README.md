@@ -259,8 +259,17 @@ Booking Confirmed ✅
 ### Admin Account
 | Field | Value |
 |---|---|
-| Email | `admin@cinebook.com` |
+| Email | `admin@gmail.com` |
 | Password | `password123` |
+
+### If it says invaild email or passowrd for admin:
+- Go to this website: https://bcrypt-generator.com/
+- Then enter text to hash and copy the hash
+- In xampp phpadmin update admin table:
+UPDATE admins
+SET password = 'Hash that you have generated'
+WHERE email = 'admin@gmail.com';
+
 
 ### Customer Account
 Register at `/customer/register` with any email and password.
