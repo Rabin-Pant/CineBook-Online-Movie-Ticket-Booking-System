@@ -48,15 +48,15 @@
                 <div class="slide-right">
                     <div class="stats-grid">
                         <div class="stat-box">
-                            <span class="stat-number">100+</span>
+                            <span class="stat-number">${totalMovies}+</span>
                             <span class="stat-label">Movies</span>
                         </div>
                         <div class="stat-box">
-                            <span class="stat-number">50K+</span>
+                            <span class="stat-number">${totalCustomers}+</span>
                             <span class="stat-label">Happy Users</span>
                         </div>
                         <div class="stat-box">
-                            <span class="stat-number">3</span>
+                            <span class="stat-number">${totalHalls}</span>
                             <span class="stat-label">Halls</span>
                         </div>
                         <div class="stat-box">

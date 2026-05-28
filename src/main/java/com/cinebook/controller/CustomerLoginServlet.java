@@ -2,6 +2,7 @@ package com.cinebook.controller;
 
 import com.cinebook.model.Customer;
 import com.cinebook.service.CustomerService;
+import com.cinebook.utils.DBConnection;
 import com.cinebook.utils.SessionUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -9,6 +10,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Connection;
 
 @WebServlet("/customer/login")
 public class CustomerLoginServlet extends HttpServlet {
@@ -23,8 +25,7 @@ public class CustomerLoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("/customer-login.jsp")
-               .forward(request, response);
+        request.getRequestDispatcher("/customer-login.jsp").forward(request, response);
     }
 
     @Override
@@ -37,22 +38,26 @@ public class CustomerLoginServlet extends HttpServlet {
         if (email == null || email.trim().isEmpty() ||
             password == null || password.trim().isEmpty()) {
             request.setAttribute("error", "Please fill all fields!");
-            request.getRequestDispatcher("/customer-login.jsp")
-                   .forward(request, response);
+            request.getRequestDispatcher("/customer-login.jsp").forward(request, response);
             return;
         }
 
-        Customer customer = customerService.loginCustomer(
-            email.trim(), password);
+        // Check DB connection first before attempting login
+        if (!isDatabaseAvailable()) {
+            request.setAttribute("error",
+            		"⚠️ Our server is currently experiencing issues. Please try again later.");
+            request.getRequestDispatcher("/customer-login.jsp").forward(request, response);
+            return;
+        }
+
+        Customer customer = customerService.loginCustomer(email.trim(), password);
 
         if (customer == null) {
             request.setAttribute("error", "Invalid email or password!");
-            request.getRequestDispatcher("/customer-login.jsp")
-                   .forward(request, response);
+            request.getRequestDispatcher("/customer-login.jsp").forward(request, response);
             return;
         }
 
-        // Check if blocked
         if (!customer.isActive()) {
             request.setAttribute("error",
                 "Your account has been blocked. Please <a href='" +
@@ -63,5 +68,13 @@ public class CustomerLoginServlet extends HttpServlet {
 
         SessionUtil.setLoggedInCustomer(request, customer);
         response.sendRedirect(request.getContextPath() + "/customer/dashboard");
+    }
+
+    private boolean isDatabaseAvailable() {
+        try (Connection conn = DBConnection.getConnection()) {
+            return conn != null && !conn.isClosed();
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

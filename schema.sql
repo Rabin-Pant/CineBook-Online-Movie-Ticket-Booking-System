@@ -1,7 +1,7 @@
 -- ================================================
--- CineBook Database Schema (Final)
+-- CineBook Database Schema
 -- Online Movie Ticket Booking System
--- Version: 2.0
+-- Version: 3.0
 -- ================================================
 
 CREATE DATABASE IF NOT EXISTS cinebook;
@@ -28,15 +28,21 @@ CREATE TABLE IF NOT EXISTS admins (
 -- TABLE: customers
 -- ================================================
 CREATE TABLE IF NOT EXISTS customers (
-    customer_id      INT AUTO_INCREMENT PRIMARY KEY,
-    full_name        VARCHAR(100) NOT NULL,
-    email            VARCHAR(100) NOT NULL UNIQUE,
-    password         VARCHAR(255) NOT NULL,
-    phone            VARCHAR(15) DEFAULT NULL,
-    is_active        TINYINT(1) DEFAULT 1,
-    profile_picture  VARCHAR(255) DEFAULT NULL,
-    created_at       TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+    customer_id          INT AUTO_INCREMENT PRIMARY KEY,
+    full_name            VARCHAR(100) NOT NULL,
+    email                VARCHAR(100) NOT NULL UNIQUE,
+    password             VARCHAR(255) NOT NULL,
+    phone                VARCHAR(15) DEFAULT NULL,
+    is_active            TINYINT(1) DEFAULT 1,
+    profile_picture      VARCHAR(255) DEFAULT NULL,
+    is_verified          BOOLEAN DEFAULT FALSE,
+    verification_token   VARCHAR(255) DEFAULT NULL,
+    token_expiry         TIMESTAMP NULL,
+    reset_token          VARCHAR(255) DEFAULT NULL,
+    reset_token_expiry   TIMESTAMP NULL,
+    created_at           TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
+
 -- ================================================
 -- TABLE: movies
 -- ================================================
@@ -51,6 +57,16 @@ CREATE TABLE IF NOT EXISTS movies (
     poster_url   VARCHAR(255),               -- stored in cinebook_uploads folder
     status       ENUM('now_showing','coming_soon') DEFAULT 'now_showing',
     created_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- ================================================
+-- TABLE: halls
+-- ================================================
+CREATE TABLE IF NOT EXISTS halls (
+    hall_id    INT AUTO_INCREMENT PRIMARY KEY,
+    hall_name  VARCHAR(50) NOT NULL,
+    capacity   INT NOT NULL DEFAULT 60,
+    is_active  BOOLEAN DEFAULT TRUE
 );
 
 -- ================================================
@@ -92,7 +108,7 @@ CREATE TABLE IF NOT EXISTS bookings (
     total_amount      DECIMAL(10,2) NOT NULL,
     booking_status    ENUM('confirmed','cancelled') DEFAULT 'confirmed',
 
-    -- eSewa Payment fields
+    -- eSewa / Khalti Payment fields
     payment_method    VARCHAR(50) DEFAULT 'esewa',
     payment_status    ENUM('pending','completed','failed') DEFAULT 'pending',
     transaction_id    VARCHAR(100) NULL,
@@ -168,3 +184,11 @@ INSERT INTO admins (
     'super_admin',
     TRUE
 );
+
+-- ================================================
+-- DEFAULT HALLS
+-- ================================================
+INSERT INTO halls (hall_name, capacity) VALUES
+('Hall 1', 60),
+('Hall 2', 60),
+('Hall 3', 60);
