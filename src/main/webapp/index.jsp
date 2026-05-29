@@ -369,6 +369,7 @@
         </div>
     </div>
 </section>
+
 <script>
 const sliderTrack = document.getElementById('sliderTrack');
 const prevBtn = document.getElementById('sliderPrev');
@@ -379,7 +380,7 @@ const slides = document.querySelectorAll('.slide');
 const totalSlides = slides.length;
 let currentSlide = 0;
 
-const slideIntervalTime = 5000;
+const slideIntervalTime = 3500;
 let autoSlideTimer;
 
 function startAutoSlide() {
@@ -468,5 +469,6 @@ heroSlider.addEventListener('touchend', e => {
 
 createDots();
 startAutoSlide();
-</script>
+</script>   
+
 <%@ include file="components/footer.jsp" %>

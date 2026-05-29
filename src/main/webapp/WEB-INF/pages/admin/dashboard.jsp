@@ -353,5 +353,4 @@
         alert("Critical Failure: Could not load Chart library from primary or backup infrastructure networks.");
     }
 </script>
-
 <%@ include file="/components/footer.jsp" %>
