@@ -370,74 +370,83 @@
     </div>
 </section>
 <script>
-// ===== HERO SLIDER =====
-const sliderTrack   = document.getElementById('sliderTrack');
-const prevBtn       = document.getElementById('sliderPrev');
-const nextBtn       = document.getElementById('sliderNext');
+const sliderTrack = document.getElementById('sliderTrack');
+const prevBtn = document.getElementById('sliderPrev');
+const nextBtn = document.getElementById('sliderNext');
 const dotsContainer = document.getElementById('sliderDots');
 
-const slides      = document.querySelectorAll('.slide');
+const slides = document.querySelectorAll('.slide');
 const totalSlides = slides.length;
-let currentSlide  = 0;
+let currentSlide = 0;
 
-// Create dots dynamically based on the slides
+const slideIntervalTime = 5000;
+let autoSlideTimer;
+
+function startAutoSlide() {
+    autoSlideTimer = setInterval(nextSlide, slideIntervalTime);
+}
+
+function resetAutoSlide() {
+    clearInterval(autoSlideTimer);
+    startAutoSlide();
+}
+
 function createDots() {
     dotsContainer.innerHTML = '';
     slides.forEach((_, i) => {
         const dot = document.createElement('button');
         dot.classList.add('slider-dot');
         if (i === currentSlide) dot.classList.add('active');
-        dot.addEventListener('click', () => goToSlide(i));
+        
+        dot.addEventListener('click', () => {
+            goToSlide(i);
+            resetAutoSlide(); 
+        });
+        
         dotsContainer.appendChild(dot);
     });
 }
 
-// Update active states of the navigation dots
 function updateDots() {
     document.querySelectorAll('.slider-dot').forEach((dot, i) => {
         dot.classList.toggle('active', i === currentSlide);
     });
 }
 
-// Moves slider to a specific index (Fixed JSP String Concatenation)
 function goToSlide(index) {
     currentSlide = index;
     sliderTrack.style.transform = 'translateX(-' + (currentSlide * 100) + '%)';
     updateDots();
 }
 
-// Next slide calculation (Increments by exactly 1 step)
 function nextSlide() {
     currentSlide = (currentSlide + 1) % totalSlides;
     goToSlide(currentSlide);
 }
 
-// Prev slide calculation (Decrements by exactly 1 step)
 function prevSlide() {
     currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
     goToSlide(currentSlide);
 }
 
-// --- FIX FOR THE DOUBLE STEPPING CONTROL BUTTONS ---
-// Clone the buttons to clear any duplicate/latent event listeners in memory
 const cleanPrevBtn = prevBtn.cloneNode(true);
 const cleanNextBtn = nextBtn.cloneNode(true);
 
 prevBtn.replaceWith(cleanPrevBtn);
 nextBtn.replaceWith(cleanNextBtn);
 
-// Re-attach manual-only click event listeners to our new clean buttons
 cleanPrevBtn.addEventListener('click', (e) => {
     e.preventDefault();
     prevSlide();
+    resetAutoSlide();
 });
 
 cleanNextBtn.addEventListener('click', (e) => {
     e.preventDefault();
     nextSlide();
+    resetAutoSlide();
 });
 
-// --- TOUCH AND SWIPE SUPPORT (MANUAL ONLY) ---
 const heroSlider = document.querySelector('.hero-slider');
 let touchStartX = 0;
 
@@ -447,17 +456,17 @@ heroSlider.addEventListener('touchstart', e => {
 
 heroSlider.addEventListener('touchend', e => {
     const diff = touchStartX - e.changedTouches[0].clientX;
-    // Check if swipe distance is significant
     if (Math.abs(diff) > 50) {
         if (diff > 0) {
-            nextSlide(); // Swipe left
+            nextSlide();
         } else {
-            prevSlide(); // Swipe right
+            prevSlide();
         }
+        resetAutoSlide();
     }
 }, { passive: true });
 
-// Initialize the elements on load
 createDots();
+startAutoSlide();
 </script>
 <%@ include file="components/footer.jsp" %>
