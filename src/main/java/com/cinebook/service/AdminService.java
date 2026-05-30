@@ -163,8 +163,10 @@ public class AdminService {
                 else if ("coming_soon".equals(movie.getStatus())) comingSoonCount++;
             }
         }
+        ContactMessageDAO contactDAO = new ContactMessageDAO();
         stats.put("nowShowingCount", nowShowingCount);
         stats.put("comingSoonCount", comingSoonCount);
+        stats.put("unreadMessageCount", contactDAO.getUnreadCount());
 
         // ✅ Chart data
         stats.put("chartDays",           bookingDAO.getLast7Days());

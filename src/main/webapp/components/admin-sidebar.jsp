@@ -146,11 +146,20 @@
             </a>
         </li>
         
-        <li>
-    <a href="${pageContext.request.contextPath}/admin/contact-messages"
-       class="${currentURI.contains('contact') ? 'active' : ''}">
-        📬 Messages
-    </a>
-</li>
+      <li>
+            <%-- Instantiate the DAO directly inside the JSP to avoid compilation issues --%>
+            <jsp:useBean id="sidebarMessageDAO" class="com.cinebook.dao.ContactMessageDAO" scope="page" />
+            <c:set var="liveUnreadCount" value="${sidebarMessageDAO.unreadCount}" />
+
+            <a href="${pageContext.request.contextPath}/admin/contact-messages"
+               class="${currentURI.contains('contact') ? 'active' : ''}">
+                📬 Messages
+                <c:if test="${liveUnreadCount > 0}">
+                    <span class="badge" style="background-color: #e94560; color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.75rem; margin-left: auto; font-weight: bold;">
+                        ${liveUnreadCount}
+                    </span>
+                </c:if>
+            </a>
+        </li>
     </ul>
 </aside>

@@ -127,6 +127,8 @@ CineBook/
 │           │   └── web.xml
 │           ├── index.jsp
 │           ├── contact.jsp
+│           ├── privacy-policy.jsp    
+│           ├── terms.jsp             
 │           ├── customer-login.jsp
 │           ├── customer-register.jsp
 │           └── admin-login.jsp

@@ -205,9 +205,12 @@ public class ContactMessageDAO {
         return false;
     }
 
-    // ===== Count unread messages =====
+ // ===== Count unread messages =====
     public int getUnreadCount() {
-        String sql = "SELECT COUNT(*) FROM contact_messages WHERE is_read = FALSE";
+        // Updated query: Counts messages that are unread AND have no admin replies yet
+        String sql = "SELECT COUNT(*) FROM contact_messages " +
+                     "WHERE is_read = FALSE " +
+                     "AND message_id NOT IN (SELECT DISTINCT message_id FROM contact_replies)";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {

@@ -96,10 +96,25 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary btn-full">
-                <i class="fas fa-user-check"></i> Create Account
-            </button>
+           <div class="form-group" style="margin-bottom: 1rem;">
+    <label style="display:flex; align-items:flex-start; gap:0.6rem; font-weight:normal; cursor:pointer;">
+        <input type="checkbox" id="agreeTerms" name="agreeTerms"
+               style="margin-top:3px; accent-color:#e94560; width:16px; height:16px; flex-shrink:0;"
+               required />
+        <span style="font-size:0.875rem; color:#555; line-height:1.5;">
+            I agree to the
+            <a href="${pageContext.request.contextPath}/privacy-policy" target="_blank"
+               style="color:#e94560; text-decoration:underline;">Privacy Policy</a>
+            and
+            <a href="${pageContext.request.contextPath}/terms" target="_blank"
+               style="color:#e94560; text-decoration:underline;">Terms of Service</a>
+        </span>
+    </label>
+</div>
 
+<button type="submit" class="btn btn-primary btn-full">
+    <i class="fas fa-user-check"></i> Create Account
+</button>
         </form>
 
         <div class="auth-footer">

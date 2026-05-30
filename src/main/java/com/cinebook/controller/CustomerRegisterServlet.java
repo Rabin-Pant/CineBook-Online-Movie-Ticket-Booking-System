@@ -34,6 +34,17 @@ public class CustomerRegisterServlet extends HttpServlet {
         String phone          = request.getParameter("phone");
         String password       = request.getParameter("password");
         String confirmPassword = request.getParameter("confirmPassword");
+        
+     // Privacy policy agreement check
+        String agreeTerms = request.getParameter("agreeTerms");
+        if (agreeTerms == null) {
+            request.setAttribute("error", "You must agree to the Privacy Policy and Terms of Service!");
+            request.setAttribute("fullName", fullName);
+            request.setAttribute("email", email);
+            request.setAttribute("phone", phone);
+            request.getRequestDispatcher("/customer-register.jsp").forward(request, response);
+            return;
+        }
 
         // Check empty fields
         if (fullName == null || fullName.trim().isEmpty() ||
