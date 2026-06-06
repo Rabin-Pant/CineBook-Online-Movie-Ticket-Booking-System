@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions"%>
 
 <c:set var="pageTitle" value="My Profile" />
 <c:set var="extraCSS" value="profile.css" />
@@ -7,128 +8,138 @@
 <%@ include file="/components/header.jsp" %>
 <%@ include file="/components/navbar.jsp" %>
 
-<div class="container" style="max-width: 1200px; margin: 0 auto; padding: 40px 20px;">
-
-    <h1 class="page-title" style="text-align: center; margin-bottom: 40px; font-size: 2.5rem; background: linear-gradient(135deg, #e94560, #667eea); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
-        👤 My Profile
-    </h1>
-
-    <c:if test="${not empty success}">
-        <div class="alert alert-success" style="background: linear-gradient(135deg, #d4edda, #c3e6cb); border-left: 4px solid #28a745; padding: 15px 20px; border-radius: 10px; margin-bottom: 20px;">
-            <strong>✓ Success!</strong> ${success}
-        </div>
-    </c:if>
-    <c:if test="${not empty error}">
-        <div class="alert alert-error" style="background: linear-gradient(135deg, #f8d7da, #f5c6cb); border-left: 4px solid #dc3545; padding: 15px 20px; border-radius: 10px; margin-bottom: 20px;">
-            <strong>⚠ Error!</strong> ${error}
-        </div>
-    </c:if>
-
-    <div class="profile-wrapper">
-
-        <div class="profile-card">
-            <div class="profile-pic-wrapper">
-                <c:choose>
-                    <c:when test="${not empty sessionScope.loggedInCustomer.profilePicture}">
-                        <img src="${pageContext.request.contextPath}/uploads/${sessionScope.loggedInCustomer.profilePicture}" alt="Profile Picture" class="profile-pic-img"/>
-                    </c:when>
-                    <c:otherwise>
-                        <div class="profile-avatar">
-                            <%
-                                String fullName = ((com.cinebook.model.Customer) session.getAttribute("loggedInCustomer")).getFullName();
-                                out.print(fullName.substring(0, 1).toUpperCase());
-                            %>
-                        </div>
-                    </c:otherwise>
-                </c:choose>
-
-                <label for="quickPicUpload" class="profile-pic-overlay" title="Change Photo">
-                    📷
-                </label>
-            </div>
-
-            <h3>${sessionScope.loggedInCustomer.fullName}</h3>
-            <p>${sessionScope.loggedInCustomer.email}</p>
-            <p>📞 ${sessionScope.loggedInCustomer.phone}</p>
-            <p class="member-since">
-                Member since ${sessionScope.loggedInCustomer.createdAt}
-            </p>
-        </div>
-
-        <div class="profile-form card">
-            <h3>Update Profile</h3>
-
-           <form action="${pageContext.request.contextPath}/customer/profile" method="post" enctype="multipart/form-data">
+<div class="dashboard-container">
     
-    <div class="form-group">
-        <label>Profile Picture</label>
-        <div class="pic-upload-area">
+    <%-- Header Section with Welcome Message --%>
+    <div class="dashboard-header">
+        <div>
+            <h1>Welcome back, <span class="gradient-text">${sessionScope.loggedInCustomer.fullName}</span>!</h1>
+            <p class="header-subtitle">Manage your account settings and preferences.</p>
+        </div>
+        <div class="profile-avatar-large">
             <c:choose>
                 <c:when test="${not empty sessionScope.loggedInCustomer.profilePicture}">
-                    <img src="${pageContext.request.contextPath}/uploads/${sessionScope.loggedInCustomer.profilePicture}" alt="Current" id="picPreview" class="pic-preview-img"/>
+                    <img src="${pageContext.request.contextPath}/uploads/${sessionScope.loggedInCustomer.profilePicture}" alt="Profile">
                 </c:when>
                 <c:otherwise>
-                    <div id="picPreview" class="pic-preview-placeholder">
-                        👤 No photo uploaded
+                    <div class="avatar-placeholder">
+                        ${fn:substring(sessionScope.loggedInCustomer.fullName, 0, 1)}
                     </div>
                 </c:otherwise>
             </c:choose>
-            <label for="profilePicture" class="pic-upload-btn">
-                📷 Choose Photo
-            </label>
-            <input type="file" id="profilePicture" name="profilePicture" accept="image/*" onchange="previewPicture(this)"/>
-            <small style="color:#888;">JPG, PNG, WEBP accepted (Max 5MB)</small>
         </div>
     </div>
 
-                <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" name="fullName" value="${sessionScope.loggedInCustomer.fullName}" required />
+    <%-- Tab Navigation --%>
+    <div class="dashboard-tabs">
+        <button class="tab-btn active" onclick="switchTab('profile')">Profile Settings</button>
+        <button class="tab-btn" onclick="switchTab('security')">Security & Password</button>
+    </div>
+
+    <%-- Tab 1: Profile Settings --%>
+    <div id="profileTab" class="tab-content active">
+        <div class="content-card">
+            <h3>Profile Information</h3>
+            
+            <%-- Success/Error Messages --%>
+            <c:if test="${not empty success}">
+                <div class="alert alert-success">✓ ${success}</div>
+            </c:if>
+            <c:if test="${not empty error}">
+                <div class="alert alert-error">⚠ ${error}</div>
+            </c:if>
+            
+            <form action="${pageContext.request.contextPath}/customer/profile" method="post" enctype="multipart/form-data">
+                <div class="form-row-2col">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" name="fullName" value="${sessionScope.loggedInCustomer.fullName}" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" value="${sessionScope.loggedInCustomer.email}" disabled />
+                    </div>
                 </div>
-
-                <div class="form-group">
-    <label>Phone Number</label>
-    <input type="text" 
-           value="${sessionScope.loggedInCustomer.phone}" 
-           disabled />
-    <small style="color:#888; display: block; margin-top: 4px;">
-        Registered phone number cannot be changed.
-    </small>
-</div>
-
-                <div class="form-group">
-                    <label>Email Address</label>
-                    <input type="email" value="${sessionScope.loggedInCustomer.email}" disabled />
-                    <small style="color:#888;">Email cannot be changed</small>
+                
+                <div class="form-row-2col">
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input type="text" value="${sessionScope.loggedInCustomer.phone}" disabled />
+                    </div>
+                    <div class="form-group">
+                        <label>Profile Picture</label>
+                        <div class="pic-upload-wrapper">
+                            <c:choose>
+                                <c:when test="${not empty sessionScope.loggedInCustomer.profilePicture}">
+                                    <img src="${pageContext.request.contextPath}/uploads/${sessionScope.loggedInCustomer.profilePicture}" 
+                                         id="picPreview" class="pic-preview-img"/>
+                                </c:when>
+                                <c:otherwise>
+                                    <div id="picPreview" class="pic-preview-placeholder">👤 No photo</div>
+                                </c:otherwise>
+                            </c:choose>
+                            <label for="profilePicture" class="pic-upload-btn">📷 Choose Photo</label>
+                            <input type="file" id="profilePicture" name="profilePicture" accept="image/*" 
+                                   onchange="previewPicture(this)" style="display: none;"/>
+                            <small>JPG, PNG, WEBP (Max 5MB)</small>
+                        </div>
+                    </div>
                 </div>
-
-                <button type="submit" class="btn btn-primary">
-                    Update Profile
-                </button>
+                
+                <button type="submit" class="btn btn-primary">Save Profile Changes</button>
             </form>
+        </div>
+    </div>
 
-            <hr style="margin: 28px 0; border-color: #eee;">
+    <%-- Tab 2: Security & Password --%>
+    <div id="securityTab" class="tab-content">
+        <div class="content-card">
             <h3>Change Password</h3>
             <form action="${pageContext.request.contextPath}/customer/change-password" method="post">
                 <div class="form-group">
                     <label>Current Password</label>
-                    <input type="password" name="currentPassword" required />
+                    <input type="password" name="currentPassword" placeholder="Enter current password" required />
                 </div>
-                <div class="form-group">
-                    <label>New Password</label>
-                    <input type="password" name="newPassword" minlength="6" required />
+                
+                <div class="form-row-2col">
+                    <div class="form-group">
+                        <label>New Password</label>
+                        <input type="password" name="newPassword" minlength="6" placeholder="At least 6 characters" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Confirm New Password</label>
+                        <input type="password" name="confirmPassword" placeholder="Repeat new password" required />
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>Confirm New Password</label>
-                    <input type="password" name="confirmPassword" required />
-                </div>
-                <button type="submit" class="btn btn-secondary">
-                    Change Password
-                </button>
+                
+                <button type="submit" class="btn btn-primary">Update Password</button>
             </form>
         </div>
+    </div>
+    
+</div>
 
-    </div> </div> <script>
+<script>
+    // Tab switching function
+    function switchTab(tabName) {
+        // Hide all tabs
+        document.getElementById('profileTab').classList.remove('active');
+        document.getElementById('securityTab').classList.remove('active');
+        
+        // Remove active class from all buttons
+        const buttons = document.querySelectorAll('.tab-btn');
+        buttons.forEach(btn => btn.classList.remove('active'));
+        
+        // Show selected tab
+        if (tabName === 'profile') {
+            document.getElementById('profileTab').classList.add('active');
+            buttons[0].classList.add('active');
+        } else if (tabName === 'security') {
+            document.getElementById('securityTab').classList.add('active');
+            buttons[1].classList.add('active');
+        }
+    }
+    
     // Preview picture before upload
     function previewPicture(input) {
         if (input.files && input.files[0]) {
@@ -138,7 +149,6 @@
                 if (preview.tagName === 'IMG') {
                     preview.src = e.target.result;
                 } else {
-                    // Replace placeholder div with img
                     const img = document.createElement('img');
                     img.src = e.target.result;
                     img.id = 'picPreview';

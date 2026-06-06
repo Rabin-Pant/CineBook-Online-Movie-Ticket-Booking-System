@@ -48,7 +48,7 @@
 
             <div class="ticket-footer">
                 💚 Rs. ${booking.refundAmount} will be credited to your
-                eSewa wallet within <strong>24 hours</strong>
+                Khalti wallet within <strong>24 hours</strong>
             </div>
         </div>
 

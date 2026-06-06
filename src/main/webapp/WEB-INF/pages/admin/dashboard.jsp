@@ -17,35 +17,35 @@
         <div class="admin-topbar">
             <h2>Dashboard</h2>
             <span style="color:#888; font-size:0.9rem;">
-                Welcome back, <strong>${sessionScope.loggedInAdmin.fullName}</strong> 👋
+                Welcome back, <strong>${sessionScope.loggedInAdmin.fullName}</strong>
             </span>
         </div>
 
         <!-- ===== STATS ROW 1 ===== -->
         <div class="admin-stats">
             <div class="admin-stat-card highlight">
-                <div class="stat-icon-admin">💰</div>
+                <div class="stat-icon-admin"></div>
                 <div class="stat-details">
                     <h3>Rs. ${stats.totalRevenue}</h3>
                     <p>Total Revenue</p>
                 </div>
             </div>
             <div class="admin-stat-card">
-                <div class="stat-icon-admin">🎟</div>
+                <div class="stat-icon-admin"></div>
                 <div class="stat-details">
                     <h3>${stats.totalBookings}</h3>
                     <p>Total Bookings</p>
                 </div>
             </div>
             <div class="admin-stat-card">
-                <div class="stat-icon-admin">👥</div>
+                <div class="stat-icon-admin"></div>
                 <div class="stat-details">
                     <h3>${stats.totalCustomers}</h3>
                     <p>Total Customers</p>
                 </div>
             </div>
             <div class="admin-stat-card">
-                <div class="stat-icon-admin">✂️</div>
+                <div class="stat-icon-admin"></div>
                 <div class="stat-details">
                     <h3>Rs. ${stats.cancellationFeeRevenue}</h3>
                     <p>Cancellation Fees</p>
@@ -56,28 +56,28 @@
         <!-- ===== STATS ROW 2 ===== -->
         <div class="admin-stats" style="margin-top:0;">
             <div class="admin-stat-card">
-                <div class="stat-icon-admin">🎬</div>
+                <div class="stat-icon-admin"></div>
                 <div class="stat-details">
                     <h3>${stats.totalMovies}</h3>
                     <p>Total Movies</p>
                 </div>
             </div>
             <div class="admin-stat-card">
-                <div class="stat-icon-admin">▶️</div>
+                <div class="stat-icon-admin"></div>
                 <div class="stat-details">
                     <h3>${stats.nowShowingCount}</h3>
                     <p>Now Showing</p>
                 </div>
             </div>
             <div class="admin-stat-card">
-                <div class="stat-icon-admin">🕐</div>
+                <div class="stat-icon-admin"></div>
                 <div class="stat-details">
                     <h3>${stats.comingSoonCount}</h3>
                     <p>Coming Soon</p>
                 </div>
             </div>
             <div class="admin-stat-card">
-                <div class="stat-icon-admin">👤</div>
+                <div class="stat-icon-admin"></div>
                 <div class="stat-details">
                     <h3>${stats.totalCustomers}</h3>
                     <p>Registered Users</p>
@@ -91,7 +91,7 @@
             <!-- Revenue Line Chart -->
             <div class="admin-card chart-card">
                 <div class="admin-card-header">
-                    <h3>📈 Revenue Last 7 Days</h3>
+                    <h3>Revenue Last 7 Days</h3>
                 </div>
                 <canvas id="revenueChart" height="120"></canvas>
             </div>
@@ -99,7 +99,7 @@
             <!-- Booking Status Doughnut -->
             <div class="admin-card chart-card">
                 <div class="admin-card-header">
-                    <h3>🎟 Booking Status</h3>
+                    <h3>Booking Status Distribution</h3>
                 </div>
                 <canvas id="statusChart" height="120"></canvas>
             </div>
@@ -109,7 +109,7 @@
         <!-- Top Movies Bar Chart -->
         <div class="admin-card" style="margin-bottom:24px;">
             <div class="admin-card-header">
-                <h3>🎬 Top 5 Most Booked Movies</h3>
+                <h3>Top 5 Most Booked Movies</h3>
             </div>
             <canvas id="moviesChart" height="80"></canvas>
         </div>
@@ -128,7 +128,7 @@
                         <table class="data-table">
                             <thead>
                                 <tr>
-                                    <th>#</th>
+                                    <th>ID</th>
                                     <th>Customer</th>
                                     <th>Movie</th>
                                     <th>Date</th>
@@ -294,7 +294,6 @@
         // ===== TOP MOVIES BAR CHART =====
         try {
             const moviesCtx = document.getElementById('moviesChart').getContext('2d');
-            // Changed from single quotes to double quotes to protect titles with apostrophes
             const movieLabels = [<c:forEach var="entry" items="${stats.bookingsByMovie}" varStatus="s">"${entry.key}"<c:if test="${!s.last}">,</c:if></c:forEach>];
             const movieCounts = [<c:forEach var="entry" items="${stats.bookingsByMovie}" varStatus="s">${entry.value}<c:if test="${!s.last}">,</c:if></c:forEach>];
             
@@ -341,7 +340,7 @@
                         x: {
                             grid: { display: false },
                             ticks: { font: { size: 11 } }
-                }
+                        }
                     }
                 }
             });
