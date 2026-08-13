@@ -39,6 +39,9 @@
         <div class="legend-item">
             <div class="seat-demo booked"></div><span>Booked</span>
         </div>
+        <div class="legend-item">
+            <div class="seat-demo processing"></div><span>Payment in Progress</span>
+        </div>
     </div>
 
     <form id="bookingForm" action="" method="post">
@@ -53,8 +56,13 @@
                             ${seat.seatNumber}
                         </div>
                     </c:when>
+                    <c:when test="${seat.processing}">
+                        <div class="seat processing" title="Seat ${seat.seatNumber} - Payment in progress">
+                            ${seat.seatNumber}
+                        </div>
+                    </c:when>
                     <c:otherwise>
-                        <div class="seat available" id="seat-${seat.seatId}" title="Seat ${seat.seatNumber} - Available" onclick="toggleSeat(${seat.seatId}, '${seat.seatNumber}')">
+                        <div class="seat available" id="seat-${seat.seatId}" data-seat-number="${seat.seatNumber}" title="Seat ${seat.seatNumber} - Available">
                             ${seat.seatNumber}
                             <input type="checkbox" name="seats" id="check-${seat.seatId}" value="${seat.seatId}" style="display:none;" />
                         </div>
@@ -90,7 +98,16 @@
 <script>
     const pricePerSeat = parseFloat('${showtime.price}');
     const contextPath  = '${pageContext.request.contextPath}';
+    const showtimeId   = parseInt('${showtime.showtimeId}', 10);
     let selectedSeats  = [];
+
+    document.querySelectorAll('.seat.available').forEach(function(seatDiv) {
+        seatDiv.addEventListener('click', function() {
+            if (this.classList.contains('booked') || this.classList.contains('processing')) return;
+            const seatId = parseInt(this.id.replace('seat-', ''), 10);
+            toggleSeat(seatId, this.dataset.seatNumber);
+        });
+    });
 
     function toggleSeat(seatId, seatNumber) {
         const seatDiv  = document.getElementById('seat-' + seatId);
@@ -125,11 +142,60 @@
         document.getElementById('khaltiBtn').disabled = !hasSeats;
     }
 
+    function markSeatUnavailable(seatId, reason) {
+        const seatDiv  = document.getElementById('seat-' + seatId);
+        const checkbox = document.getElementById('check-' + seatId);
+        if (!seatDiv) return;
+
+        const stateClass = reason === 'processing' ? 'processing' : 'booked';
+        const stateLabel = reason === 'processing' ? 'Payment in progress' : 'Booked';
+
+        seatDiv.classList.remove('available', 'selected');
+        seatDiv.classList.add(stateClass);
+        seatDiv.title = 'Seat ' + seatDiv.dataset.seatNumber + ' - ' + stateLabel;
+        if (checkbox) checkbox.checked = false;
+
+        const index = selectedSeats.indexOf(seatId);
+        if (index !== -1) selectedSeats.splice(index, 1);
+    }
+
     function submitBooking(gateway) {
         if (selectedSeats.length === 0) {
             alert('Please select at least one seat!');
             return;
         }
+
+        fetch(contextPath + '/customer/check-seats', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: 'showtimeId=' + showtimeId + '&seatIds=' + selectedSeats.join(',')
+        })
+            .then(function(res) { return res.json(); })
+            .then(function(data) {
+                if (data.error) {
+                    alert(data.error);
+                    return;
+                }
+                if (!data.allAvailable) {
+                    const names = data.bookedSeats.map(function(s) { return s.seatNumber; }).join(', ');
+                    const anyProcessing = data.bookedSeats.some(function(s) { return s.reason === 'processing'; });
+                    const message = anyProcessing
+                        ? 'Sorry, seat(s) ' + names + ' — someone else is currently paying for this seat. Please choose a different seat.'
+                        : 'Sorry, seat(s) ' + names + ' have already been booked. Please choose a different seat.';
+                    alert(message);
+                    data.bookedSeats.forEach(function(s) { markSeatUnavailable(s.seatId, s.reason); });
+                    updateSummary();
+                    return;
+                }
+                proceedToGateway(gateway);
+            })
+            .catch(function(err) {
+                console.error('Seat availability check failed:', err);
+                alert('Could not verify seat availability. Please try again.');
+            });
+    }
+
+    function proceedToGateway(gateway) {
         const total = selectedSeats.length * pricePerSeat;
         document.getElementById('totalAmountField').value = total.toFixed(2);
 

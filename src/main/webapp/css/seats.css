@@ -107,9 +107,10 @@
     border-radius: 6px 6px 2px 2px;
 }
 
-.seat-demo.available { background: #1f3a3a; border: 1px solid #00bfa6; }
-.seat-demo.selected  { background: #e94560; border: 1px solid #ff5271; box-shadow: 0 0 10px rgba(233, 69, 96, 0.5); }
-.seat-demo.booked    { background: #252538; border: 1px solid #44445c; }
+.seat-demo.available  { background: #1f3a3a; border: 1px solid #00bfa6; }
+.seat-demo.selected   { background: #e94560; border: 1px solid #ff5271; box-shadow: 0 0 10px rgba(233, 69, 96, 0.5); }
+.seat-demo.booked     { background: #252538; border: 1px solid #44445c; }
+.seat-demo.processing { background: #4a3b0f; border: 1px solid #f5a623; }
 
 .seat-map {
     display: grid;
@@ -168,6 +169,19 @@
     color: #44445c;
     cursor: not-allowed;
     border-bottom: 4px solid #1a1a26;
+}
+
+.seat.processing {
+    background: #4a3b0f;
+    border: 1px solid #f5a623;
+    color: #f5a623;
+    cursor: not-allowed;
+    animation: seatProcessingPulse 1.6s ease-in-out infinite;
+}
+
+@keyframes seatProcessingPulse {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.55; }
 }
 
 .booking-summary {

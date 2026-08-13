@@ -1,6 +1,7 @@
 package com.cinebook.controller;
 
 import com.cinebook.model.Customer;
+import com.cinebook.service.SeatService;
 import com.cinebook.utils.SessionUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -10,7 +11,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 
 @WebServlet("/customer/esewa-payment")
 public class ESewaPaymentServlet extends HttpServlet {
@@ -18,6 +21,13 @@ public class ESewaPaymentServlet extends HttpServlet {
 	private static final String ESEWA_URL = "https://rc-epay.esewa.com.np/api/epay/main/v2/form";
     private static final String MERCHANT_CODE = "EPAYTEST";
     private static final String SECRET_KEY    = "8gBm/:&EnhH.1/q"; // Official eSewa sandbox secret
+
+    private SeatService seatService;
+
+    @Override
+    public void init() throws ServletException {
+        seatService = new SeatService();
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -31,6 +41,21 @@ public class ESewaPaymentServlet extends HttpServlet {
 
             if (seatIds == null || seatIds.length == 0 || totalAmtStr == null) {
                 response.sendRedirect(request.getContextPath() + "/customer/movies?error=Invalid booking selection");
+                return;
+            }
+
+            List<Integer> seatIdList = new ArrayList<>();
+            for (String id : seatIds) {
+                seatIdList.add(Integer.parseInt(id.trim()));
+            }
+
+            // Authoritative check: claim (or refresh) a hold on every seat before leaving for the gateway.
+            // Fails if any seat is already booked or actively held by someone else.
+            boolean claimed = seatService.holdSeats(showtimeId, seatIdList, customer.getCustomerId());
+            if (!claimed) {
+                response.sendRedirect(request.getContextPath() +
+                    "/customer/seats?showtimeId=" + showtimeId +
+                    "&error=" + java.net.URLEncoder.encode("One or more selected seats are no longer available.", "UTF-8"));
                 return;
             }
 

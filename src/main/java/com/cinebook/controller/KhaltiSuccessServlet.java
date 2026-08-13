@@ -1,6 +1,7 @@
 package com.cinebook.controller;
 
 import com.cinebook.dao.BookingDAO;
+import com.cinebook.service.SeatService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -23,10 +24,12 @@ public class KhaltiSuccessServlet extends HttpServlet {
     private static final String SECRET_KEY        = "live_secret_key_68791341fdd94846a146f0457ff7b455";
 
     private BookingDAO bookingDAO;
+    private SeatService seatService;
 
     @Override
     public void init() throws ServletException {
         bookingDAO = new BookingDAO();
+        seatService = new SeatService();
     }
 
     @Override
@@ -150,6 +153,7 @@ public class KhaltiSuccessServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() +
                     "/customer/booking-confirmation?bookingId=" + bookingId);
             } else {
+                seatService.releaseHold(showtimeId, seatList, customerId);
                 response.sendRedirect(request.getContextPath() +
                     "/customer/movies?error=Payment successful but booking failed. Contact support.");
             }

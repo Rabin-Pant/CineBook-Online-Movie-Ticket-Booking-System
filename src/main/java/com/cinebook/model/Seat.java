@@ -6,6 +6,7 @@ public class Seat {
     private int showtimeId;
     private String seatNumber;
     private boolean isBooked;
+    private boolean processing; // true if another customer currently has a payment in progress for this seat
     
     // Default constructor
     public Seat() {}
@@ -49,5 +50,13 @@ public class Seat {
     
     public void setBooked(boolean isBooked) {
         this.isBooked = isBooked;
+    }
+
+    public boolean isProcessing() {
+        return processing;
+    }
+
+    public void setProcessing(boolean processing) {
+        this.processing = processing;
     }
 }

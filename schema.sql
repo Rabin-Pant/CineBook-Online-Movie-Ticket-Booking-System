@@ -90,10 +90,12 @@ CREATE TABLE IF NOT EXISTS showtimes (
 -- Rows A-F, 10 seats each = 60 seats max
 -- ================================================
 CREATE TABLE IF NOT EXISTS seats (
-    seat_id      INT AUTO_INCREMENT PRIMARY KEY,
-    showtime_id  INT NOT NULL,
-    seat_number  VARCHAR(10) NOT NULL,        -- e.g. A1, B5
-    is_booked    BOOLEAN DEFAULT FALSE,
+    seat_id             INT AUTO_INCREMENT PRIMARY KEY,
+    showtime_id         INT NOT NULL,
+    seat_number         VARCHAR(10) NOT NULL,        -- e.g. A1, B5
+    is_booked           BOOLEAN DEFAULT FALSE,
+    held_by_customer_id INT NULL,                    -- temporary hold while a payment is in progress
+    held_at             TIMESTAMP NULL,               -- hold expires after a few minutes (checked in app code)
     FOREIGN KEY (showtime_id) REFERENCES showtimes(showtime_id)
         ON DELETE CASCADE
 );

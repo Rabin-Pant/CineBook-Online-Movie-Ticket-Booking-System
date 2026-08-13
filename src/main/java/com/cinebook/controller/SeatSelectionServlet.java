@@ -1,9 +1,11 @@
 package com.cinebook.controller;
 
+import com.cinebook.model.Customer;
 import com.cinebook.model.Seat;
 import com.cinebook.model.Showtime;
 import com.cinebook.service.SeatService;
 import com.cinebook.service.ShowtimeService;
+import com.cinebook.utils.SessionUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -29,9 +31,18 @@ public class SeatSelectionServlet extends HttpServlet {
             throws ServletException, IOException {
         
         int showtimeId = Integer.parseInt(request.getParameter("showtimeId"));
-        
+
+        Customer loggedInCustomer = SessionUtil.getLoggedInCustomer(request);
+        int viewerCustomerId = (loggedInCustomer != null) ? loggedInCustomer.getCustomerId() : 0;
+
+        // Reaching seat-selection means picking fresh, not mid-payment: drop any hold
+        // this customer still has on this showtime (e.g. they hit Back after clicking Pay).
+        if (viewerCustomerId > 0) {
+            seatService.releaseHold(showtimeId, viewerCustomerId);
+        }
+
         Showtime showtime = showtimeService.getShowtimeById(showtimeId);
-        List<Seat> seats = seatService.getSeatsByShowtime(showtimeId);
+        List<Seat> seats = seatService.getSeatsByShowtime(showtimeId, viewerCustomerId);
         
         request.setAttribute("showtime", showtime);
         request.setAttribute("seats", seats);

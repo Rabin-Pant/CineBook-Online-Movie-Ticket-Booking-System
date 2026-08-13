@@ -1,6 +1,7 @@
 package com.cinebook.controller;
 
 import com.cinebook.dao.BookingDAO;
+import com.cinebook.service.SeatService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -16,10 +17,12 @@ import java.util.List;
 public class ESewaSuccessServlet extends HttpServlet {
 
     private BookingDAO bookingDAO;
+    private SeatService seatService;
 
     @Override
     public void init() throws ServletException {
         bookingDAO = new BookingDAO();
+        seatService = new SeatService();
     }
 
     @Override
@@ -120,6 +123,7 @@ public class ESewaSuccessServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() +
                     "/customer/booking-confirmation?bookingId=" + bookingId);
             } else {
+                seatService.releaseHold(showtimeId, seatList, customerId);
                 response.sendRedirect(request.getContextPath() +
                     "/customer/movies?error=Payment successful but booking failed");
             }

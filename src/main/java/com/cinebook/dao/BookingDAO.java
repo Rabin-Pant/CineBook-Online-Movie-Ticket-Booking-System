@@ -20,7 +20,8 @@ public class BookingDAO {
                              BigDecimal totalAmount, List<Integer> seatIds) {
         String bookingSql     = "INSERT INTO bookings (customer_id, showtime_id, total_amount, booking_status) VALUES (?, ?, ?, 'confirmed')";
         String bookingSeatSql = "INSERT INTO booking_seats (booking_id, seat_id) VALUES (?, ?)";
-        String updateSeatSql  = "UPDATE seats SET is_booked = TRUE WHERE seat_id = ? AND is_booked = FALSE";
+        String updateSeatSql  = "UPDATE seats SET is_booked = TRUE, held_by_customer_id = NULL, held_at = NULL " +
+                                "WHERE seat_id = ? AND is_booked = FALSE";
 
         Connection con = null;
         try {
@@ -74,7 +75,8 @@ public class BookingDAO {
                                 "booking_status, payment_method, payment_status, transaction_id, payment_amount) " +
                                 "VALUES (?, ?, ?, 'confirmed', ?, 'completed', ?, ?)";
         String bookingSeatSql = "INSERT INTO booking_seats (booking_id, seat_id) VALUES (?, ?)";
-        String updateSeatSql  = "UPDATE seats SET is_booked = TRUE WHERE seat_id = ?";
+        String updateSeatSql  = "UPDATE seats SET is_booked = TRUE, held_by_customer_id = NULL, held_at = NULL " +
+                                "WHERE seat_id = ? AND is_booked = FALSE";
 
         Connection con = null;
         try {
@@ -107,7 +109,10 @@ public class BookingDAO {
                 psUpdate.setInt(1, seatId);
                 psUpdate.addBatch();
             }
-            psUpdate.executeBatch();
+            int[] results = psUpdate.executeBatch();
+            for (int result : results) {
+                if (result == 0) throw new SQLException("One or more seats already booked.");
+            }
 
             con.commit();
             return bookingId;

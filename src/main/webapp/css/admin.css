@@ -323,10 +323,15 @@
 }
 
 @media (max-width: 768px) {
+    .admin-wrapper {
+        flex-direction: column;
+        min-height: auto;
+    }
+
     .admin-main {
         padding: 20px;
     }
-    
+
     .admin-stats {
         grid-template-columns: 1fr;
     }

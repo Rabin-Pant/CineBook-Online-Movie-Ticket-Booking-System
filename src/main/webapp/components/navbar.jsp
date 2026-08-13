@@ -124,6 +124,11 @@
 </nav>
 
 <script>
+function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('active');
+    document.getElementById('hamburger').classList.toggle('active');
+}
+
 (function() {
     const searchInteractive = document.getElementById('searchInteractive');
     const searchInput = document.getElementById('searchInput');
